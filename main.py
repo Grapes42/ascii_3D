@@ -7,21 +7,20 @@ class Coord():
 
     def __str__(self) -> str:
         return f"y: {self.y}, x: {self.x}"
+    
+class Pair():
+    def __init__(self, a, b) -> None:
+        self.a = a
+        self.b = b
 
         
 screen = Screen(height=40, width=40)
 
+points = [Coord(0,0), Coord(0, 10), Coord(15,0), Coord(10,20)]
 
-a = Coord(10,0)
-b = Coord(0, 10)
 
-screen.plot(a, "s")
-screen.plot(b, "e")
+pairs = [[0,1], [1,3], [3,2], [2,0]]
 
-#screen.line(a, b, .5)
-#screen.line(Coord(0, 0), Coord(15, 10), .5)
-#screen.line(Coord(10, 10), Coord(0, 10))
-
-screen.func(origin=Coord(15,15), func="**2/10")
+screen.construct_pairs(points=points, pairs=pairs, step_size=.5)
 
 screen.print()

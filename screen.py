@@ -64,3 +64,9 @@ class Screen():
     def construct_pairs(self, points, pairs, step_size=1):
         for pair in pairs:
             self.line(points[pair[0]], points[pair[1]], step_size)
+
+
+    def triangle(self, coord0, coord1, coord2):
+        self.line(coord0, coord1)
+        self.line(coord1, coord2)
+        self.line(coord2, coord0)

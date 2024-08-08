@@ -16,13 +16,15 @@ class Pair():
         self.a = a
         self.b = b
 
-screen = Screen(height=round(1080/10), width=round(1920/10))
+screen_height = 50
+screen_width = 100
+screen = Screen(height=screen_height, width=screen_width)
 
 # Defining the camera matrix
 fx = 800
 fy = 800
-cx = 640
-cy = 480
+cx = 0
+cy = 0
 camera_matrix = np.array([[fx, 0, cx],
                           [0, fy, cy],
                           [0, 0, 1]], np.float32)
@@ -31,8 +33,11 @@ camera_matrix = np.array([[fx, 0, cx],
 dist_coeffs = np.zeros((5, 1), np.float32)
 
 # Defining the 3D point in the world
-x, y, z = 10, 20, 30
-points_3d = np.array([[[x, y-10, z], [x, y+10, z], [x, y-10, z-5], [x, y+10, z-5]]], np.float32)
+x, y, z = 0, 0, 0
+space = .1
+z_back = 2
+points_3d = np.array([[    [x-space, y-space, z], [x+space, y-space, z], [x-space, y+space, z], [x+space, y+space, z],
+                           [x-space, y-space, z+z_back], [x+space, y-space, z+z_back], [x-space, y+space, z+z_back], [x+space, y+space, z+z_back]    ]], np.float32)
 
 # Define the rotation and translation vectors
 rvec = np.zeros((3, 1), np.float32)
@@ -48,11 +53,21 @@ print(points_2d)
 
 points = []
 
+screen.rectangle(Coord(0, 0), Coord(screen_height-1, screen_width-1))
+
 for i in range(len(points_2d)):
-    points.append(Coord(points_2d[i,0,0]/10, points_2d[i,0,1]/10))
+    points.append(Coord(points_2d[i,0,0]/10+(screen_height/2), points_2d[i,0,1]/10+(screen_width/2)))
 
 for point in points:
-    screen.plot(point)
+    screen.plot(point, char="#")
+
+pairs = [ [0, 1], [1, 3], [3, 2], [2, 0],
+          [4, 5], [5, 7], [7, 6], [6, 4],
+          [0, 4], [1, 5], [3, 7], [2, 6] ]
+
+screen.construct_pairs(pairs=pairs, points=points)
+
+
 
 #points = [Coord(0,0), Coord(0, 10), Coord(15,0), Coord(10,20)]
 

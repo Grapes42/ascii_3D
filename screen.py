@@ -70,3 +70,18 @@ class Screen():
         self.line(coord0, coord1)
         self.line(coord1, coord2)
         self.line(coord2, coord0)
+
+    def rectangle(self, coord0, coord1):
+        a = coord0
+        c = coord1
+
+        b = copy(a)
+        b.x = c.x
+
+        d = copy(c)
+        d.x = a.x
+
+        self.line(a, b)
+        self.line(b, c)
+        self.line(c, d)
+        self.line(d, a)

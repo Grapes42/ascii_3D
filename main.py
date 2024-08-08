@@ -34,10 +34,11 @@ dist_coeffs = np.zeros((5, 1), np.float32)
 
 # Defining the 3D point in the world
 x, y, z = 0, 0, 0
-space = .1
+x_space = .2
+y_space = .1
 z_back = 2
-points_3d = np.array([[    [x-space, y-space, z], [x+space, y-space, z], [x-space, y+space, z], [x+space, y+space, z],
-                           [x-space, y-space, z+z_back], [x+space, y-space, z+z_back], [x-space, y+space, z+z_back], [x+space, y+space, z+z_back]    ]], np.float32)
+points_3d = np.array([[    [y-y_space, x-x_space, z], [y+y_space, x-x_space, z], [y-y_space, x+x_space, z], [y+y_space, x+x_space, z],
+                           [y-y_space, x-x_space, z+z_back], [y+y_space, x-x_space, z+z_back], [y-y_space, x+x_space, z+z_back], [y+y_space, x+x_space, z+z_back]    ]], np.float32)
 
 # Define the rotation and translation vectors
 rvec = np.zeros((3, 1), np.float32)

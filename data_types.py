@@ -14,8 +14,3 @@ class Coord_3D():
 
     def __str__(self) -> str:
         return f"y: {self.y}, x: {self.x}, z: {self.z}"
-    
-class Pair():
-    def __init__(self, a, b) -> None:
-        self.a = a
-        self.b = b

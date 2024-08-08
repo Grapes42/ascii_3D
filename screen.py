@@ -8,7 +8,21 @@ class Screen():
         self.arr = [[" " for x in range(self.width)] for y in range(self.height)]
 
     def plot(self, coord, char="#"):
-        self.arr[round(coord.y)][round(coord.x)] = char
+        y = round(coord.y)
+        x = round(coord.x)
+
+        if (y < 0) or (y > self.height-1):
+            in_y_boundary = False
+        else:
+            in_y_boundary = True
+
+        if (x < 0) or (x > self.width-1):
+            in_x_boundary = False
+        else:
+            in_x_boundary = True
+
+        if in_y_boundary and in_x_boundary:
+            self.arr[y][x] = char
 
     def print(self):
         screen_str = ""
@@ -20,6 +34,8 @@ class Screen():
 
         #self.clear()
         print(screen_str)
+
+        self.arr = [[" " for x in range(self.width)] for y in range(self.height)]
 
     def clear(self):
         # for windows

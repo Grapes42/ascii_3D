@@ -1,28 +1,30 @@
-import numpy as np
-import cv2
-
-import time
-
-from screen import Screen
+from shapes import *
 from projection import Projection
 from data_types import *
+from screen import Screen
 
 screen_height = 150
-screen_width = 500
+screen_width = 300
 
-screen = Screen(height=screen_height, width=screen_width)
-projection = Projection(screen_height=screen_height, screen_width=screen_width, scale=1, 
-                        fx=800, fy=800)
+def construct_objects(objects):
+    for object in objects:
+        screen.construct_pairs(points=projection.map_to_2d(object.array),
+                               pairs=object.pairs)
 
+screen = Screen(height=screen_height, width=screen_width, 
+                origin_y=round(screen_height/2), origin_x=round(screen_width/2))
 
-points, pairs = projection.cube_by_center(origin=Coord_3D(0, 0, 10),
-                                    width=2,
-                                    height=1,
-                                    depth=2)
-screen.construct_pairs(pairs=pairs, points=points)
-
+projection = Projection()
 
 
-screen.print()
+objects = []
 
-time.sleep(.1)
+cube = Object3D()
+cube.array, cube.pairs = cube_by_center(y=0, x=0, z=10,
+                                        width=2, height=1, depth=2)
+
+objects.append(cube)
+
+construct_objects(objects)
+
+screen.print(clear=False)

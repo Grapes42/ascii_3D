@@ -19,11 +19,36 @@ projection = Projection()
 
 objects = []
 
-cube = Object3D()
-cube.array, cube.pairs = cube_by_center(y=0, x=0, z=10,
-                                        width=2, height=1, depth=2)
+hall = Object3D()
+hall.array, hall.pairs = cube_by_corners(x0=-1, y0=-.5, z0=5,
+                                        x1=1, y1=.5, z1=20)
+objects.append(hall)
 
-objects.append(cube)
+door = Object3D()
+door.array, door.pairs = cube_by_corners(x0=-.5, y0=-.25, z0=20,
+                                        x1=.5, y1=.5, z1=30)
+objects.append(door)
+
+table = Object3D()
+table.array, table.pairs = cube_by_corners(x0=.2, y0=.3, z0=7,
+                                        x1=-1, y1=.5, z1=10)
+objects.append(table)
+
+table_item = Object3D()
+table_item.array, table_item.pairs = cube_by_corners(x0=-.5, y0=.2, z0=8,
+                                        x1=-1, y1=.3, z1=9)
+objects.append(table_item)
+
+pillar = Object3D()
+pillar.array, pillar.pairs = cube_by_corners(x0=.5, y0=-.5, z0=12,
+                                            x1=.8, y1=.5, z1=13)
+objects.append(pillar)
+
+pillar_1 = Object3D()
+pillar_1.array, pillar_1.pairs = cube_by_corners(x0=.5, y0=-.5, z0=6,
+                                            x1=.8, y1=.5, z1=7)
+objects.append(pillar_1)
+
 
 construct_objects(objects)
 

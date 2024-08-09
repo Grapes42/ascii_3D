@@ -5,8 +5,8 @@ from screen import Screen
 
 import time
 
-screen_height = 100
-screen_width = 400
+screen_height = 150
+screen_width = 600
 
 def construct_objects(objects):
     for object in objects:
@@ -22,29 +22,35 @@ projection = Projection()
 objects = []
 
 cube = Object3D()
-cube.array, cube.pairs = cube_by_center(x=0, y=0, z=8,
-                                        height=.5, width=1, depth=2)
+cube.array, cube.pairs = cube_by_center(x=-1.5, y=-.4, z=7,
+                                        height=-.5, width=1, depth=2)
 objects.append(cube)
+construct_objects(objects)
+screen.print()
 
-delay = .2
-amount = .2
-loop_count = 10
+def move_over_period(object, axis, period, amount, steps):
+    
+    step_size = amount/steps
+    delay = period/steps
 
-cube.move(axis="x", amount=-amount*(loop_count/2))
+    for i in range(steps):
+        object.move(axis=axis, amount=step_size)
+        time.sleep(delay)
+        construct_objects(objects)
+        screen.print()
+    
+
+period = .5
+
+x_amount = 3
+y_amount = .8
+z_amount = 4
 
 while True:
-    for i in range(loop_count):
-        construct_objects(objects)
-        screen.print(clear=True)
+    move_over_period(object=cube, axis="x", period=period, amount=x_amount, steps=5)
+    move_over_period(object=cube, axis="z", period=period, amount=z_amount, steps=5)
+    move_over_period(object=cube, axis="y", period=period, amount=y_amount, steps=5)
 
-        cube.move(axis="x", amount=amount)    
-
-        time.sleep(delay)
-
-    for i in range(loop_count):
-        construct_objects(objects)
-        screen.print(clear=True)
-
-        cube.move(axis="x", amount=-amount)    
-
-        time.sleep(delay)
+    move_over_period(object=cube, axis="x", period=period, amount=-x_amount, steps=5)
+    move_over_period(object=cube, axis="z", period=period, amount=-z_amount, steps=5)
+    move_over_period(object=cube, axis="y", period=period, amount=-y_amount, steps=5)

@@ -9,7 +9,7 @@ class Screen():
     def __init__(self, height, width, origin_y=0, origin_x=0) -> None:
         self.height = height
         self.width = width
-        self.array = np.full((height, width), " ")
+        self.array = np.full((self.height, self.width), " ")
 
         self.origin_y = origin_y
         self.origin_x = origin_x
@@ -32,10 +32,12 @@ class Screen():
                 line += str(self.array[y, x])
             screen_str += f"{line}\n"
 
+        if clear:
+            self.array = np.full((self.height, self.width), " ")
+        self.clear()
         print(screen_str)
 
-        if clear:
-            self.clear()
+        
 
     def plot(self, y, x, char="#"):
         y = round(y) + self.origin_y

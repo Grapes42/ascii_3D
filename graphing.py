@@ -1,12 +1,11 @@
-from os import system, name
 from copy import copy
 import numpy as np
 
 X = 1
 Y = 0
 
-class Screen():
-    def __init__(self, height, width, origin_y=0, origin_x=0, y_correction=.5) -> None:
+class Graphing():
+    def __init__(self, height, width, origin_y=0, origin_x=0, y_correction=1) -> None:
         self.height = height
         self.width = width
         self.array = np.full((self.height, self.width), " ")
@@ -17,29 +16,7 @@ class Screen():
         self.y_correction = y_correction
 
     def clear(self):
-        # for windows
-        if name == 'nt':
-            _ = system('cls')
-    
-        # for mac and linux
-        else:
-            _ = system('clear')
-
-    def print(self, clear=True):
-        screen_str = ""
-
-        for y in range(len(self.array)):
-            line = ""
-            for x in range(len(self.array[0])):
-                line += str(self.array[y, x])
-            screen_str += f"{line}\n"
-
-        if clear:
-            self.array = np.full((self.height, self.width), " ")
-            self.clear()
-        print(screen_str)
-
-        
+        self.array = np.full((self.height, self.width), " ")
 
     def plot(self, y, x, char="#"):
         # Round points to char array

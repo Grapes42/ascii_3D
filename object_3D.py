@@ -8,23 +8,22 @@ pi = 3.14159265359
 
 class Object3D():
     def __init__(self, array=[], pairs=[], char="#") -> None:
-        self.array = array
-        self.pairs = pairs
-        self.char = char
+        self.array = array # Array of the object's co-ordinates 
+        self.pairs = pairs # Pairs to construct lines between
+        self.char = char # Character used to construct shape
 
     def __str__(self) -> str:
         return f"Array: {self.array}\nPairs: {self.pairs}\nChar: {self.char}"
     
     def move(self, axis, amount):
-        pass
+        for point in self.array[0]:
+            point[axis] += amount
 
     def rotate(self, origin, rads, axis):
         
         axes = [Y, X, Z]
 
         axes.remove(axis)
-
-        print(axes)
 
         # Define rotation origin
         a_o = origin[axes[0]]

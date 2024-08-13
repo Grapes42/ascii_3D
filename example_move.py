@@ -14,7 +14,8 @@ def construct_objects(objects):
                                pairs=object.pairs)
 
 screen = Screen(height=screen_height, width=screen_width, 
-                origin_y=round(screen_height/2), origin_x=round(screen_width/2))
+                origin_y=round(screen_height/2), origin_x=round(screen_width/2),
+                y_correction=.75)
 
 projection = Projection()
 

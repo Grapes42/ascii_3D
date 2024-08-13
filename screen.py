@@ -6,13 +6,15 @@ X = 1
 Y = 0
 
 class Screen():
-    def __init__(self, height, width, origin_y=0, origin_x=0) -> None:
+    def __init__(self, height, width, origin_y=0, origin_x=0, y_correction=.5) -> None:
         self.height = height
         self.width = width
         self.array = np.full((self.height, self.width), " ")
 
         self.origin_y = origin_y
         self.origin_x = origin_x
+
+        self.y_correction = y_correction
 
     def clear(self):
         # for windows
@@ -34,14 +36,14 @@ class Screen():
 
         if clear:
             self.array = np.full((self.height, self.width), " ")
-        self.clear()
+            self.clear()
         print(screen_str)
 
         
 
     def plot(self, y, x, char="#"):
-        y = round(y) + self.origin_y
-        x = round(x) + self.origin_x
+        y = round(y*self.y_correction + self.origin_y)
+        x = round(x + self.origin_x)
 
         if (y < 0) or (y > self.height-1):
             in_y_boundary = False

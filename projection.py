@@ -27,3 +27,7 @@ class Projection():
                                         self.dist_coeffs)
 
         return points_2d
+    
+    #def rotate_3d_arr(self, array, axis, degrees):
+     #   if axis == 0:
+            

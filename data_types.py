@@ -12,3 +12,10 @@ class Object3D():
     def move(self, axis, amount):
         for point in self.array[0]:
             point[self.axis_dict[axis]] += amount
+
+    def rotate(self):
+        for point in self.array[0]:
+            x_o = origin[X]
+        y_o = origin[Y]
+        x_i = point[X]
+        y_i = point[Y]

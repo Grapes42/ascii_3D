@@ -45,13 +45,13 @@ def rotate(origin, object, rads):
         screen.plot(y=y_f, x=x_f, char="F")
 
 
-screen_height = 30
+screen_height = 50
 screen_width = 100
 
 screen = Screen(height=screen_height, width=screen_width, 
                 origin_y=round(screen_height/2), origin_x=round(screen_width/2), y_correction=.5)
 
-origin = [10, 0]
+origin = [30, 0]
 
 screen.plot(y=origin[Y], x=origin[X], char="O")
 

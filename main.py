@@ -41,14 +41,27 @@ cube.array, cube.pairs = cube_by_center(x=0, y=0, z=10,
                                         height=1, width=1, depth=1)
 objects.append(cube)
 
-cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
+#cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
 while True:
-    cube.rotate(origin=[0, 0, 10], rads=.2, axis=Y)
-
     construct_objects(objects)
-    interface.update(graphing.array)
+    
+    mouse_dir, mouse_button, keyboard_dir = interface.update(graphing.array)
+
+    print(mouse_dir)
+
+    if mouse_dir[X] != 0:
+        cube.rotate(origin=[0, 0, 10], rads=.2*mouse_dir[X], axis=Y)
+
+    if mouse_dir[Y] != 0:
+        cube.rotate(origin=[0, 0, 10], rads=.2*mouse_dir[Y], axis=X)
+
+    if keyboard_dir[X] != 0:
+        cube.rotate(origin=[0, 0, 10], rads=.2*keyboard_dir[X], axis=Y)
+
+    if keyboard_dir[Y] != 0:
+        cube.rotate(origin=[0, 0, 10], rads=.2*keyboard_dir[Y], axis=X)
 
     graphing.clear()
 

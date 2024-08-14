@@ -1,5 +1,12 @@
 import pygame
 
+Y = 0
+X = 1
+
+LEFT = 0
+MIDDLE = 1
+RIGHT = 2
+
 class GUIInterface():
     def __init__(self, chars_height, chars_width, pixel_height, pixel_width, frame_rate=20, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
         self.clock = pygame.time.Clock()
@@ -61,8 +68,12 @@ class GUIInterface():
         for y in range(self.chars_height):
             self.display_surface.blit(self.rendered_rows[y], self.rectangles[y])
 
+        mouse_dir = [0, 0]
+        mouse_buttons = [0, 0, 0]
+        keyboard_dir = [0, 0]
+
         for event in pygame.event.get():
- 
+
             if event.type == pygame.QUIT:
             
                 # deactivating the pygame library
@@ -70,8 +81,33 @@ class GUIInterface():
     
                 # quitting the program.
                 quit()
+
+            
+            elif event.type == pygame.MOUSEMOTION:
+                if event.rel[0] > 0: 
+                    mouse_dir[X] = 1
+                elif event.rel[0] < 0:
+                    mouse_dir[X] = -1
+
+                elif event.rel[1] > 0: 
+                    mouse_dir[Y] = 1
+                elif event.rel[1] < 0:
+                    mouse_dir[Y] = -1
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w: 
+                    keyboard_dir[Y] = -1
+                elif event.key == pygame.K_s: 
+                    keyboard_dir[Y] = 1
+                elif event.key == pygame.K_a: 
+                    keyboard_dir[X] = -1
+                elif event.key == pygame.K_d: 
+                    keyboard_dir[X] = 1
+
     
             # update the display
-        pygame.display.update()
+            pygame.display.update()
 
-        self.clock.tick(self.frame_rate)
+            #self.clock.tick(self.frame_rate)
+
+        return mouse_dir, mouse_buttons, keyboard_dir

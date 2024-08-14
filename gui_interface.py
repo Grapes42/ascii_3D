@@ -8,7 +8,7 @@ MIDDLE = 1
 RIGHT = 2
 
 class GUIInterface():
-    def __init__(self, chars_height, chars_width, pixel_height, pixel_width, frame_rate=20, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
+    def __init__(self, chars_height, chars_width, pixel_height, pixel_width, frame_rate=60, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
         self.clock = pygame.time.Clock()
         self.frame_rate = frame_rate
         
@@ -70,7 +70,8 @@ class GUIInterface():
 
         mouse_dir = [0, 0]
         mouse_buttons = [0, 0, 0]
-        keyboard_dir = [0, 0]
+        key_down_dir = [0, 0]
+        key_up_dir = [0, 0]
 
         for event in pygame.event.get():
 
@@ -96,18 +97,28 @@ class GUIInterface():
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_w: 
-                    keyboard_dir[Y] = -1
+                    key_down_dir[Y] = -1
                 elif event.key == pygame.K_s: 
-                    keyboard_dir[Y] = 1
+                    key_down_dir[Y] = 1
                 elif event.key == pygame.K_a: 
-                    keyboard_dir[X] = -1
+                    key_down_dir[X] = -1
                 elif event.key == pygame.K_d: 
-                    keyboard_dir[X] = 1
+                    key_down_dir[X] = 1
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_w: 
+                    key_up_dir[Y] = -1
+                elif event.key == pygame.K_s: 
+                    key_up_dir[Y] = 1
+                elif event.key == pygame.K_a: 
+                    key_up_dir[X] = -1
+                elif event.key == pygame.K_d: 
+                    key_up_dir[X] = 1
 
     
             # update the display
-            pygame.display.update()
+        pygame.display.update()
 
             #self.clock.tick(self.frame_rate)
 
-        return mouse_dir, mouse_buttons, keyboard_dir
+        return mouse_dir, mouse_buttons, key_down_dir, key_up_dir

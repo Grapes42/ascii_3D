@@ -46,12 +46,15 @@ objects.append(cube)
 
 sens = .1
 
+move_dir = [0, 0]
+
 while True:
     construct_objects(objects)
     
-    mouse_dir, mouse_button, keyboard_dir = interface.update(graphing.array)
+    mouse_dir, mouse_button, key_down_dir, key_up_dir = interface.update(graphing.array)
 
-    print(mouse_dir)
+    
+
 
     if mouse_dir[X] != 0:
         cube.rotate(origin=[0, 0, 10], rads=sens*mouse_dir[X], axis=Y)
@@ -59,11 +62,28 @@ while True:
     if mouse_dir[Y] != 0:
         cube.rotate(origin=[0, 0, 10], rads=sens*mouse_dir[Y], axis=X)
 
-    if keyboard_dir[X] != 0:
-        cube.rotate(origin=[0, 0, 10], rads=sens*keyboard_dir[X], axis=Y)
 
-    if keyboard_dir[Y] != 0:
-        cube.rotate(origin=[0, 0, 10], rads=sens*keyboard_dir[Y], axis=X)
+
+
+    if key_down_dir[X] != 0:
+        move_dir[X] += key_down_dir[X]
+
+    if key_down_dir[Y] != 0:
+        move_dir[Y] += key_down_dir[Y]
+
+
+    if key_up_dir[X] != 0:
+        move_dir[X] -= key_up_dir[X]
+
+    if key_up_dir[Y] != 0:
+        move_dir[Y] -= key_up_dir[Y]
+
+
+    if move_dir[X] != 0:
+        cube.rotate(origin=[0, 0, 10], rads=sens*move_dir[X], axis=Y)
+
+    if move_dir[Y] != 0:
+        cube.rotate(origin=[0, 0, 10], rads=sens*move_dir[Y], axis=X)
 
     graphing.clear()
 

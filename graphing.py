@@ -5,7 +5,7 @@ X = 1
 Y = 0
 
 class Graphing():
-    def __init__(self, height, width, origin_y=0, origin_x=0, y_correction=1) -> None:
+    def __init__(self, height, width, origin_y=0, origin_x=0, y_correction=.5) -> None:
         self.height = height
         self.width = width
         self.array = np.full((self.height, self.width), " ")

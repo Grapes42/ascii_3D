@@ -11,13 +11,16 @@ Y = 0
 X = 1
 Z = 2
 
+pi = 3.14159265359
+
 screen_height = 100
 screen_width = 300
+
 
 def construct_objects(objects):
     for object in objects:
         graphing.construct_pairs(points=projection.map_to_2d(object.array),
-                               pairs=object.pairs, step_size=1)
+                               pairs=object.pairs, step_size=1, char=object.char)
 
 # Defining the object for graphing
 graphing = Graphing(height=screen_height, width=screen_width, 
@@ -40,8 +43,8 @@ projection = Projection()
 objects = []
 
 # Test cube
-cube = Object3D()
-cube.array, cube.pairs = cube_by_center(x=0, y=0, z=10,
+cube = Object3D(char="&")
+cube.array, cube.pairs = pyramid_by_center(x=0, y=0, z=10,
                                         height=1, width=1, depth=1)
 objects.append(cube)
 
@@ -55,6 +58,9 @@ move_dir = [0, 0]
 #
 # Main loop
 #
+
+#cube.rotate(origin=[0, 0, 10], rads=.5*pi, axis=X)
+
 while True:
     construct_objects(objects)
     

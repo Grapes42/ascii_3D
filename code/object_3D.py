@@ -4,6 +4,9 @@ Y = 0
 X = 1
 Z = 2
 
+A = 0
+B = 1
+
 pi = 3.14159265359
 
 class Object3D():
@@ -33,32 +36,40 @@ class Object3D():
             a_i = point[axes[0]]
             b_i = point[axes[1]]
 
+
             # Distances from origin to initial point
             a_from_origin = abs(a_i - a_o)
             b_from_origin = abs(b_i - b_o)
 
+            # Temporary fix
+            if a_from_origin == 0 and b_from_origin == 0:
+                a_from_origin = 0.0001
+
+            print(f"afo: {a_from_origin}, bfo: {b_from_origin}")
+
             # Uses the Pythagorean theorum to find the radius of the rotation
             radius = math.sqrt( a_from_origin**2 + b_from_origin**2 )
+
 
             # Determine what quadrant of the circle the point is in
             # and adjust the offset and trig accordingly
 
             # Both positive
             if b_i > b_o and a_i > a_o:
-                angle_corrector = math.atan( (b_from_origin) / (a_from_origin) )
+                angle_corrector = math.atan(b_from_origin / a_from_origin)
 
             # b positive, a negative
             elif b_i > b_o and a_i < a_o:
-                angle_corrector = math.atan( (a_from_origin) / (b_from_origin) ) + (.5 * pi)
+                angle_corrector = math.atan(a_from_origin / b_from_origin) + (.5 * pi)
 
             # Both negative
             elif b_i < b_o and a_i < a_o:
-                angle_corrector = math.atan( (b_from_origin) / (a_from_origin) ) + (pi)
+                angle_corrector = math.atan(b_from_origin / a_from_origin) + (pi)
 
             # b negative, a positive
             elif b_i < b_o and a_i > a_o:
-                angle_corrector = math.atan( (a_from_origin) / (b_from_origin) ) + (1.5 * pi)
-
+                angle_corrector = math.atan(a_from_origin / b_from_origin) + (1.5 * pi)
+                
             # Calculate the point's rotated value
             a_f = radius * math.cos(rads+angle_corrector) + a_o
             b_f = radius * math.sin(rads+angle_corrector) + b_o
@@ -66,3 +77,5 @@ class Object3D():
             # Update shape
             point[axes[0]] = a_f
             point[axes[1]] = b_f
+
+        print("\n\n")

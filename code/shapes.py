@@ -37,11 +37,11 @@ def dodecahedron_by_center(y=0, x=0, z=0):
 
 def pyramid_by_center(y=0, x=0, z=0, width=1, height=1, depth=1):
         points_3d = np.array([[
-                [y-(height/2), x-(width/2), z-(depth/2)],
-                [y-(height/2), x+(width/2), z-(depth/2)],
-                [y-(height/2), x-(width/2), z+(depth/2)],
-                [y-(height/2), x+(width/2), z+(depth/2)],
-                [y+(height/2), x, z]
+                [y+(height/2), x-(width/2), z-(depth/2)],
+                [y+(height/2), x+(width/2), z-(depth/2)],
+                [y+(height/2), x-(width/2), z+(depth/2)],
+                [y+(height/2), x+(width/2), z+(depth/2)],
+                [y-(height/2), x, z]
         ]])
 
         pairs = [

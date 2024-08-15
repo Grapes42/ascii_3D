@@ -45,8 +45,6 @@ class Object3D():
             if a_from_origin == 0 and b_from_origin == 0:
                 a_from_origin = 0.0001
 
-            print(f"afo: {a_from_origin}, bfo: {b_from_origin}")
-
             # Uses the Pythagorean theorum to find the radius of the rotation
             radius = math.sqrt( a_from_origin**2 + b_from_origin**2 )
 

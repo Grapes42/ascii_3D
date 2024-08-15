@@ -42,8 +42,9 @@ interface = Interface(chars_height=screen_height, chars_width=screen_width,
                 fg_color=(182,242,216), bg_color=(19,30,25),
                 frame_rate=20)
 
+fov = 100
 # Defining the object for projection
-projection = Projection()
+projection = Projection(fy=fov, fx=fov)
 
 #
 # Creating 3D objects
@@ -64,7 +65,7 @@ world.append(cube)
 #
 # Main loop
 #
-sens = .01
+sens = .05
 move_speed = .1
 
 move_dir = [0, 0]

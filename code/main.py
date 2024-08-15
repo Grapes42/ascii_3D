@@ -17,10 +17,18 @@ screen_height = 100
 screen_width = 300
 
 
-def construct_objects(objects):
-    for object in objects:
+def construct_world():
+    for object in world:
         graphing.construct_pairs(points=projection.map_to_2d(object.array),
                                pairs=object.pairs, step_size=1, char=object.char)
+        
+def move_world(axis, amount):
+    for object in world:
+        object.move(axis=axis, amount=amount)
+    
+def rotate_world(axis, amount):
+    for object in world:
+        object.rotate(origin=[0, 0, 0], rads=amount, axis=axis)
 
 # Defining the object for graphing
 graphing = Graphing(height=screen_height, width=screen_width, 
@@ -40,69 +48,45 @@ projection = Projection()
 #
 # Creating 3D objects
 #
-objects = []
+world = []
 
 # Test cube
 cube = Object3D(char="&")
-cube.array, cube.pairs = pyramid_by_center(x=0, y=0, z=10,
+cube.array, cube.pairs = cube_by_center(x=0, y=0, z=10,
                                         height=1, width=1, depth=1)
-objects.append(cube)
+world.append(cube)
 
 #cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
-sens = .1
 
-move_dir = [0, 0]
 
 #
 # Main loop
 #
+sens = .01
+move_speed = .1
 
-#cube.rotate(origin=[0, 0, 10], rads=.5*pi, axis=X)
-
+move_dir = [0, 0]
 while True:
-    construct_objects(objects)
+    construct_world()
     
-    mouse_dir, mouse_button, key_down_dir, key_up_dir = interface.update(graphing.array)
+    move_dir, turn_dir = interface.update(graphing.array)
 
-    
-
-    # Rotates cube based on mouse direction
-    if mouse_dir[X] != 0:
-        cube.rotate(origin=[0, 0, 10], rads=sens*mouse_dir[X], axis=Y)
-
-    if mouse_dir[Y] != 0:
-        cube.rotate(origin=[0, 0, 10], rads=sens*mouse_dir[Y], axis=X)
-
-
-
-    #
-    # Keyboard checks
-    #
-
-    # Checks if key is down, sets direction accordingly
-    if key_down_dir[X] != 0:
-        move_dir[X] += key_down_dir[X]
-
-    if key_down_dir[Y] != 0:
-        move_dir[Y] += key_down_dir[Y]
-
-
-    # Checks if key is up, stops direction
-    if key_up_dir[X] != 0:
-        move_dir[X] -= key_up_dir[X]
-
-    if key_up_dir[Y] != 0:
-        move_dir[Y] -= key_up_dir[Y]
-
-
-    # Rotates cube based on direction
     if move_dir[X] != 0:
-        cube.rotate(origin=[0, 0, 10], rads=sens*move_dir[X], axis=Y)
+        move_world(axis=X, amount=move_dir[X]*move_speed)
 
     if move_dir[Y] != 0:
-        cube.rotate(origin=[0, 0, 10], rads=sens*move_dir[Y], axis=X)
+        move_world(axis=Z, amount=move_dir[Y]*move_speed)
+
+
+    if turn_dir[X] != 0:
+        rotate_world(axis=Y, amount=turn_dir[X]*sens)
+
+    if turn_dir[Y] != 0:
+        rotate_world(axis=X, amount=turn_dir[Y]*sens)
+
+    #time.sleep(.2)
 
     # Resets the 2D graph
     graphing.clear()

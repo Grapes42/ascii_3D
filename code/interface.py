@@ -45,12 +45,21 @@ class Interface():
 
         y_pos = 0
 
+
         for y in range(self.chars_height):
             self.rectangles.append(self.rendered_rows[y].get_rect())
 
             self.rectangles[y].center = (round(pixel_width/2),y_pos)
 
             y_pos += line_spacing
+
+        
+        # Controls variables
+        self.mouse_dir = [0, 0]
+        self.mouse_buttons = [0, 0, 0]
+
+        self.move_dir = [0, 0]
+        self.turn_dir = [0, 0]
 
 
 
@@ -74,11 +83,6 @@ class Interface():
         for y in range(self.chars_height):
             self.display_surface.blit(self.rendered_rows[y], self.rectangles[y])
 
-        # Controls variables
-        mouse_dir = [0, 0]
-        mouse_buttons = [0, 0, 0]
-        key_down_dir = [0, 0]
-        key_up_dir = [0, 0]
 
         for event in pygame.event.get():
 
@@ -90,40 +94,52 @@ class Interface():
                 # quitting the program.
                 quit()
 
-            
-            elif event.type == pygame.MOUSEMOTION:
-                if event.rel[0] > 0: 
-                    mouse_dir[X] = 1
-                elif event.rel[0] < 0:
-                    mouse_dir[X] = -1
-
-                elif event.rel[1] > 0: 
-                    mouse_dir[Y] = 1
-                elif event.rel[1] < 0:
-                    mouse_dir[Y] = -1
-
             elif event.type == pygame.KEYDOWN:
+                # Move
                 if event.key == pygame.K_w: 
-                    key_down_dir[Y] = -1
+                    self.move_dir[Y] -= 1
                 elif event.key == pygame.K_s: 
-                    key_down_dir[Y] = 1
+                    self.move_dir[Y] += 1
                 elif event.key == pygame.K_a: 
-                    key_down_dir[X] = -1
+                    self.move_dir[X] += 1
                 elif event.key == pygame.K_d: 
-                    key_down_dir[X] = 1
+                    self.move_dir[X] -= 1
+
+                # Turn
+                elif event.key == pygame.K_UP: 
+                    self.turn_dir[Y] -= 1
+                elif event.key == pygame.K_DOWN: 
+                    self.turn_dir[Y] += 1
+                elif event.key == pygame.K_LEFT: 
+                    self.turn_dir[X] -= 1
+                elif event.key == pygame.K_RIGHT: 
+                    self.turn_dir[X] += 1
 
             elif event.type == pygame.KEYUP:
+                # Move
                 if event.key == pygame.K_w: 
-                    key_up_dir[Y] = -1
+                    self.move_dir[Y] += 1
                 elif event.key == pygame.K_s: 
-                    key_up_dir[Y] = 1
+                    self.move_dir[Y] -= 1
                 elif event.key == pygame.K_a: 
-                    key_up_dir[X] = -1
+                    self.move_dir[X] -= 1
                 elif event.key == pygame.K_d: 
-                    key_up_dir[X] = 1
+                    self.move_dir[X] += 1
+
+                # Turn
+                elif event.key == pygame.K_UP: 
+                    self.turn_dir[Y] += 1
+                elif event.key == pygame.K_DOWN: 
+                    self.turn_dir[Y] -= 1
+                elif event.key == pygame.K_LEFT: 
+                    self.turn_dir[X] += 1
+                elif event.key == pygame.K_RIGHT: 
+                    self.turn_dir[X] -= 1
+           
+            
 
     
         # update the display
         pygame.display.update()
 
-        return mouse_dir, mouse_buttons, key_down_dir, key_up_dir
+        return self.move_dir, self.turn_dir

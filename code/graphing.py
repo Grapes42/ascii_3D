@@ -46,37 +46,51 @@ class Graphing():
         if in_y_boundary and in_x_boundary:
             self.array[y, x] = char
 
-    def line(self, coord0, coord1, step_size=1, char="#"):
-        rise = coord0[X] - coord1[X]
-        run = coord0[Y] - coord1[Y]
+    def get_first(self, axis0, axis1, coord0, coord1):
 
-        # If the rise is not 0, then do the gradient calculation as normal
-        if rise != 0:
-            gradient = run/rise
+        if coord0[axis0] <= coord1[axis0]:
+            pos_0 = copy(coord0[axis0])
+            end_0 = copy(coord1[axis0])
 
-            if coord0[X] <= coord1[X]:
-                pos_y, pos_x = copy(coord0[Y]), copy(coord0[X])
-                end_y, end_x = copy(coord1[Y]), copy(coord1[X])
-            else:
-                pos_y, pos_x = copy(coord1[Y]), copy(coord1[X])
-                end_y, end_x = copy(coord0[Y]), copy(coord0[X])
-
-            while pos_x <= end_x:
-                self.plot(y=pos_y, x=pos_x, char=char)
-                
-                pos_x += step_size
-                pos_y += gradient * step_size
-
-        # If the rise is 0, go straight up without x travel
+            pos_1 = copy(coord0[axis1])
+        
         else:
-            if coord0[Y] <= coord1[Y]:
-                pos_y, pos_x = copy(coord0[Y]), copy(coord0[X])
-                end_y, end_x = copy(coord1[Y]), copy(coord1[X])
-            else:
-                pos_y, pos_x = copy(coord1[Y]), copy(coord1[X])
-                end_y, end_x = copy(coord0[Y]), copy(coord0[X])
+            pos_0 = copy(coord1[axis0])
+            end_0 = copy(coord0[axis0])
 
-            while pos_y <= end_y:
+            pos_1 = copy(coord1[axis1])
+
+        return pos_0, end_0, pos_1
+
+    def line(self, coord0, coord1, step_size=1, char="#", rounding=4):
+        run = coord0[X] - coord1[X]
+        rise = coord0[Y] - coord1[Y]
+
+        if run != 0:
+            gradient = round(rise/run, rounding)
+
+            if abs(gradient) <= 1:
+                pos_x, end_x, pos_y = self.get_first(axis0=X, axis1=Y, 
+                                                    coord0=coord0, coord1=coord1)
+                
+                while pos_x < end_x:
+                    self.plot(y=pos_y, x=pos_x, char=char)
+                    pos_x += step_size
+                    pos_y += step_size * gradient
+
+            elif abs(gradient) > 1:
+                pos_y, end_y, pos_x = self.get_first(axis0=Y, axis1=X,
+                                                     coord0=coord0, coord1=coord1)
+                
+                while pos_y < end_y:
+                    self.plot(y=pos_y, x=pos_x, char=char)
+                    pos_y += step_size
+                    pos_x += step_size / gradient
+        else:
+            pos_y, end_y, pos_x = self.get_first(axis0=Y, axis1=X,
+                                                    coord0=coord0, coord1=coord1)
+            
+            while pos_y < end_y:
                 self.plot(y=pos_y, x=pos_x, char=char)
                 pos_y += step_size
 

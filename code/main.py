@@ -17,7 +17,7 @@ screen_width = 300
 def construct_objects(objects):
     for object in objects:
         graphing.construct_pairs(points=projection.map_to_2d(object.array),
-                               pairs=object.pairs, step_size=.1)
+                               pairs=object.pairs, step_size=1)
 
 # Defining the object for graphing
 graphing = Graphing(height=screen_height, width=screen_width, 

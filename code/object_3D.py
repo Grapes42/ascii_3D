@@ -75,5 +75,3 @@ class Object3D():
             # Update shape
             point[axes[0]] = a_f
             point[axes[1]] = b_f
-
-        print("\n\n")

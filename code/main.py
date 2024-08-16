@@ -1,4 +1,5 @@
 import time
+import sys
 
 # Local imports
 from shapes import *
@@ -30,6 +31,20 @@ def rotate_world(axis, amount):
     for object in world:
         object.rotate(origin=[0, 0, 0], rads=amount, axis=axis)
 
+fg_color = [182,242,216]
+bg_color=[19,30,25]
+
+for i in range(len(sys.argv)):
+    if sys.argv[i] == "-fg":
+        parts = sys.argv[i+1].split(",")
+
+        fg_color = [int(parts[0]),int(parts[1]),int(parts[2])]
+
+    elif sys.argv[i] == "-bg":
+        parts = sys.argv[i+1].split(",")
+
+        bg_color = [int(parts[0]),int(parts[1]),int(parts[2])]
+
 # Defining the object for graphing
 graphing = Graphing(height=screen_height, width=screen_width, 
                 origin_y=round(screen_height/2), origin_x=round(screen_width/2),
@@ -39,7 +54,7 @@ graphing = Graphing(height=screen_height, width=screen_width,
 interface = Interface(chars_height=screen_height, chars_width=screen_width,
                 pixel_height=1000, pixel_width=1000,
                 font_size=10, line_spacing=10,
-                fg_color=(182,242,216), bg_color=(19,30,25),
+                fg_color=fg_color, bg_color=bg_color,
                 frame_rate=20)
 
 fov = 100

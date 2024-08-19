@@ -76,7 +76,7 @@ class Graphing():
                 pos_x, end_x, pos_y = self.get_first(axis0=X, axis1=Y, 
                                                     coord0=coord0, coord1=coord1)
                 
-                while pos_x < end_x:
+                while pos_x <= end_x:
                     self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
                     pos_x += step_size
                     pos_y += step_size * gradient
@@ -85,7 +85,7 @@ class Graphing():
                 pos_y, end_y, pos_x = self.get_first(axis0=Y, axis1=X,
                                                      coord0=coord0, coord1=coord1)
                 
-                while pos_y < end_y:
+                while pos_y <= end_y:
                     self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
                     pos_y += step_size
                     pos_x += step_size / gradient
@@ -93,7 +93,7 @@ class Graphing():
             pos_y, end_y, pos_x = self.get_first(axis0=Y, axis1=X,
                                                     coord0=coord0, coord1=coord1)
             
-            while pos_y < end_y:
+            while pos_y <= end_y:
                 self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
                 pos_y += step_size
 

@@ -14,16 +14,37 @@ Z = 2
 
 pi = 3.14159265359
 
-screen_height = 50
+screen_height = 80
 screen_width = 150
 
 pixel_height = 1000
 pixel_width = 1000
 
+font = "Monospace"
+font_size = 10
+
 fps = 60
 time_per_frame = 1/60
 
 fov = 90
+
+pyeth = """ 
+ ____             _   _     
+|  _ \ _   _  ___| |_| |__  
+| |_) | | | |/ _ \ __| '_ \ 
+|  __/| |_| |  __/ |_| | | |
+|_|    \__, |\___|\__|_| |_|
+       |___/                
+"""
+
+print(f"""{"\n"*5}{pyeth}
+An ASCII 3D renderer by Max Dowdall
+      
+Character Array: {screen_height} x {screen_width}
+Window: {pixel_width}px x {pixel_height}px
+Font: {font}, size {font_size}
+FOV: {fov}
+FPS: {fps}""")
 
 
 def construct_world():
@@ -61,7 +82,7 @@ graphing = Graphing(height=screen_height, width=screen_width,
 # Defining the object for the interface
 interface = Interface(chars_height=screen_height, chars_width=screen_width,
                 pixel_height=pixel_height, pixel_width=pixel_width,
-                font_size=10, line_spacing=10,
+                font_size=font_size, font=font, line_spacing=10,
                 fg_color=fg_color, bg_color=bg_color)
 
 # Defining the object for projection
@@ -89,6 +110,16 @@ pyramid.array, pyramid.pairs = pyramid_by_center(x=1, y=-.5, z=7,
                                         height=2, width=1, depth=1)
 world.append(pyramid)
 
+cube = Object3D(char="F")
+cube.array, cube.pairs = cube_by_center(x=2, y=0, z=-2,
+                                        height=1, width=1, depth=1)
+world.append(cube)
+
+cube = Object3D(char="F")
+cube.array, cube.pairs = cube_by_center(x=-2, y=0, z=0,
+                                        height=1, width=2, depth=2)
+world.append(cube)
+
 #cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
@@ -104,10 +135,11 @@ move_dir = [0, 0]
 while True:
     construct_world()
     graphing.plot(y=0, x=0, char="+")
+
     #graphing.fill()
     graphing.rectangle(coord0=[-screen_height/2, -screen_width/2],
                        coord1=[screen_height/2-1, screen_width/2-1],
-                       char="#", y_correction=False)
+                       char=".", y_correction=False)
     
     move_dir, turn_dir = interface.update(graphing.array)
 
@@ -125,7 +157,6 @@ while True:
         rotate_world(axis=X, amount=turn_dir[Y]*sens)
 
     time.sleep(time_per_frame)
-    print(cube)
 
     # Resets the 2D graph
     graphing.clear()

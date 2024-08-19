@@ -47,7 +47,6 @@ class Projection():
 
 
         if not object_on_screen:
-            print("not rendered")
             return [], []
 
 

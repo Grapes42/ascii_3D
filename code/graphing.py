@@ -112,10 +112,10 @@ class Graphing():
         b[X] = c[X]
         d[X] = a[X]
 
-        self.line(a, b, step_size=1, char=".", y_correction=y_correction)
-        self.line(b, c, step_size=1, char=".", y_correction=y_correction)
-        self.line(c, d, step_size=1, char=".", y_correction=y_correction)
-        self.line(d, a, step_size=1, char=".", y_correction=y_correction)
+        self.line(a, b, step_size=1, char=char, y_correction=y_correction)
+        self.line(b, c, step_size=1, char=char, y_correction=y_correction)
+        self.line(c, d, step_size=1, char=char, y_correction=y_correction)
+        self.line(d, a, step_size=1, char=char, y_correction=y_correction)
 
     def fill(self, char="#"):
         self.array = np.full((self.height, self.width), char)

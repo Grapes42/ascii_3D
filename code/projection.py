@@ -1,6 +1,10 @@
 import numpy as np
 import cv2
 
+Y = 0
+X = 1
+Z = 2
+
 class Projection():
     def __init__(self, fx=800, fy=800, cx=0, cy=0) -> None:
 
@@ -25,6 +29,11 @@ class Projection():
                                         self.rvec, self.tvec,
                                         self.camera_matrix,
                                         self.dist_coeffs)
+        
+        z_map = []
 
-        return points_2d
+        for point in points_3d[0]:
+            z_map.append(point[Z])
+
+        return points_2d, z_map
             

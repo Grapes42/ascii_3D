@@ -20,8 +20,9 @@ screen_width = 300
 
 def construct_world():
     for object in world:
-        graphing.construct_pairs(points=projection.map_to_2d(object.array),
-                               pairs=object.pairs, step_size=1, char=object.char)
+        points, z_map = projection.map_to_2d(object.array)
+        graphing.construct_pairs(points=points, pairs=object.pairs, 
+                                 z_map=z_map, step_size=1, char=object.char)
         
 def move_world(axis, amount):
     for object in world:

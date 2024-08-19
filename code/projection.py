@@ -40,21 +40,10 @@ class Projection():
             coord0 = points_3d[0, pair[0]]
             coord1 = points_3d[0, pair[1]]
 
-            if coord0[Z] > 0 and coord1[Z] > 0:
+            if coord0[Z] > 0 or coord1[Z] > 0:
                 pairs_for_projection.append(pair)
                 object_on_screen = True
-
-            """
-            elif coord0[Z] > 0:
-                coord1[Z] = .1
-                pairs_for_projection.append(pair)
-                object_on_screen = True
-
-            elif coord1[Z] > 0:
-                coord0[Z] = .1
-                pairs_for_projection.append(pair)
-                object_on_screen = True
-            """
+            
 
 
         if not object_on_screen:
@@ -69,8 +58,6 @@ class Projection():
                                         self.dist_coeffs)
         
         pairs_for_rendering = []
-
-        print(points_2d)
         
         for pair in pairs_for_projection:
             coord0_in_y_bound = points_2d[pair[0], 0, Y] > -y_bound and points_2d[pair[0], 0, Y] < y_bound
@@ -81,6 +68,7 @@ class Projection():
             coord1_in_x_bound = points_2d[pair[1], 0, X] > -x_bound and points_2d[pair[1], 0, X] < x_bound
             coord1_on_screen = coord1_in_y_bound and coord1_in_x_bound
 
+            # If both points are on the screen, simply render it
             if coord0_on_screen and coord1_on_screen:
                 pairs_for_rendering.append(pair)
 

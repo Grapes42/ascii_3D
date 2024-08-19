@@ -74,6 +74,17 @@ cube.array, cube.pairs = cube_by_center(x=0, y=0, z=5,
                                         height=1, width=1, depth=1)
 world.append(cube)
 
+cube1 = Object3D(char="A")
+cube1.array, cube1.pairs = cube_by_center(x=-1.2, y=.4, z=6,
+                                        height=.2, width=1, depth=1)
+world.append(cube1)
+
+
+pyramid = Object3D(char="G")
+pyramid.array, pyramid.pairs = pyramid_by_center(x=1, y=-.5, z=7,
+                                        height=2, width=1, depth=1)
+world.append(pyramid)
+
 #cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
@@ -105,6 +116,7 @@ while True:
         rotate_world(axis=X, amount=turn_dir[Y]*sens)
 
     time.sleep(time_per_frame)
+    print(cube)
 
     # Resets the 2D graph
     graphing.clear()

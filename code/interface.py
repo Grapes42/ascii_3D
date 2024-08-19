@@ -39,7 +39,7 @@ class Interface():
         # Defining the rectangles for the rows to sit in
         self.rectangles = []
 
-        y_pos = 0
+        y_pos = 40
 
 
         for y in range(self.chars_height):

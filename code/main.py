@@ -14,11 +14,16 @@ Z = 2
 
 pi = 3.14159265359
 
-screen_height = 100
-screen_width = 300
+screen_height = 50
+screen_width = 150
+
+pixel_height = 1000
+pixel_width = 1000
 
 fps = 60
 time_per_frame = 1/60
+
+fov = 90
 
 
 def construct_world():
@@ -55,11 +60,10 @@ graphing = Graphing(height=screen_height, width=screen_width,
 
 # Defining the object for the interface
 interface = Interface(chars_height=screen_height, chars_width=screen_width,
-                pixel_height=1000, pixel_width=1000,
+                pixel_height=pixel_height, pixel_width=pixel_width,
                 font_size=10, line_spacing=10,
                 fg_color=fg_color, bg_color=bg_color)
 
-fov = 90
 # Defining the object for projection
 projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width)
 
@@ -99,6 +103,11 @@ move_speed = .1
 move_dir = [0, 0]
 while True:
     construct_world()
+    graphing.plot(y=0, x=0, char="+")
+    #graphing.fill()
+    graphing.rectangle(coord0=[-screen_height/2, -screen_width/2],
+                       coord1=[screen_height/2-1, screen_width/2-1],
+                       char="#", y_correction=False)
     
     move_dir, turn_dir = interface.update(graphing.array)
 

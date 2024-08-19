@@ -25,9 +25,12 @@ class Graphing():
     def clear(self):
         self.array = np.full((self.height, self.width), " ")
 
-    def plot(self, y, x, char="#"):
+    def plot(self, y, x, char="#", y_correction=True):
         # Round points to character array
-        y = round(y*self.y_correction + self.origin_y)
+        if y_correction:
+            y = round(y*self.y_correction + self.origin_y)
+        else:
+            y = round(y + self.origin_y)
         x = round(x + self.origin_x)
 
         # Check if point is within the screen's Y boundary
@@ -62,7 +65,7 @@ class Graphing():
 
         return pos_0, end_0, pos_1
 
-    def line(self, coord0, coord1, step_size=1, char="#", rounding=4):
+    def line(self, coord0, coord1, step_size=1, char="#", rounding=4, y_correction=True):
         run = coord0[X] - coord1[X]
         rise = coord0[Y] - coord1[Y]
 
@@ -74,7 +77,7 @@ class Graphing():
                                                     coord0=coord0, coord1=coord1)
                 
                 while pos_x < end_x:
-                    self.plot(y=pos_y, x=pos_x, char=char)
+                    self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
                     pos_x += step_size
                     pos_y += step_size * gradient
 
@@ -83,7 +86,7 @@ class Graphing():
                                                      coord0=coord0, coord1=coord1)
                 
                 while pos_y < end_y:
-                    self.plot(y=pos_y, x=pos_x, char=char)
+                    self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
                     pos_y += step_size
                     pos_x += step_size / gradient
         else:
@@ -91,10 +94,28 @@ class Graphing():
                                                     coord0=coord0, coord1=coord1)
             
             while pos_y < end_y:
-                self.plot(y=pos_y, x=pos_x, char=char)
+                self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
                 pos_y += step_size
 
     # Plots lines between all specified points and pairs
     def construct_pairs(self, points, pairs, step_size=1, char="#"):  
         for pair in pairs:
             self.line(points[pair[0], 0], points[pair[1], 0], char=char, step_size=step_size)
+
+    def rectangle(self, coord0, coord1, char="#", y_correction=True):
+        a = copy(coord0)
+        b = copy(coord0)
+
+        c = copy(coord1)
+        d = copy(coord1)
+
+        b[X] = c[X]
+        d[X] = a[X]
+
+        self.line(a, b, step_size=1, char=".", y_correction=y_correction)
+        self.line(b, c, step_size=1, char=".", y_correction=y_correction)
+        self.line(c, d, step_size=1, char=".", y_correction=y_correction)
+        self.line(d, a, step_size=1, char=".", y_correction=y_correction)
+
+    def fill(self, char="#"):
+        self.array = np.full((self.height, self.width), char)

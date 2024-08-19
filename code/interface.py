@@ -8,11 +8,7 @@ MIDDLE = 1
 RIGHT = 2
 
 class Interface():
-    def __init__(self, chars_height, chars_width, pixel_height, pixel_width, frame_rate=60, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
-        # Setting a clock to control the frame rate
-        self.clock = pygame.time.Clock()
-        self.frame_rate = frame_rate
-        
+    def __init__(self, chars_height, chars_width, pixel_height, pixel_width, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
         # Sets the width and height of the character array
         self.chars_height = chars_height
         self.chars_width = chars_width

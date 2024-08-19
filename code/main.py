@@ -17,12 +17,14 @@ pi = 3.14159265359
 screen_height = 100
 screen_width = 300
 
+fps = 60
+time_per_frame = 1/60
+
 
 def construct_world():
     for object in world:
-        points, z_map = projection.map_to_2d(object.array)
-        graphing.construct_pairs(points=points, pairs=object.pairs, 
-                                 z_map=z_map, step_size=1, char=object.char)
+        points, pairs = projection.map_to_2d(object.array, object.pairs)
+        graphing.construct_pairs(points=points, pairs=pairs, step_size=1, char=object.char)
         
 def move_world(axis, amount):
     for object in world:
@@ -55,12 +57,11 @@ graphing = Graphing(height=screen_height, width=screen_width,
 interface = Interface(chars_height=screen_height, chars_width=screen_width,
                 pixel_height=1000, pixel_width=1000,
                 font_size=10, line_spacing=10,
-                fg_color=fg_color, bg_color=bg_color,
-                frame_rate=20)
+                fg_color=fg_color, bg_color=bg_color)
 
 fov = 100
 # Defining the object for projection
-projection = Projection(fy=fov, fx=fov)
+projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width)
 
 #
 # Creating 3D objects
@@ -72,17 +73,6 @@ cube = Object3D(char="F")
 cube.array, cube.pairs = cube_by_center(x=0, y=0, z=5,
                                         height=1, width=1, depth=1)
 world.append(cube)
-
-cube1 = Object3D(char="A")
-cube1.array, cube1.pairs = cube_by_center(x=-1.2, y=.4, z=6,
-                                        height=.2, width=1, depth=1)
-world.append(cube1)
-
-
-pyramid = Object3D(char="G")
-pyramid.array, pyramid.pairs = pyramid_by_center(x=1, y=-.5, z=7,
-                                        height=2, width=1, depth=1)
-world.append(pyramid)
 
 #cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
@@ -114,7 +104,7 @@ while True:
     if turn_dir[Y] != 0:
         rotate_world(axis=X, amount=turn_dir[Y]*sens)
 
-    #time.sleep(.2)
+    time.sleep(time_per_frame)
 
     # Resets the 2D graph
     graphing.clear()

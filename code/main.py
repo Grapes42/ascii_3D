@@ -59,7 +59,7 @@ interface = Interface(chars_height=screen_height, chars_width=screen_width,
                 font_size=10, line_spacing=10,
                 fg_color=fg_color, bg_color=bg_color)
 
-fov = 100
+fov = 90
 # Defining the object for projection
 projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width)
 

@@ -40,7 +40,7 @@ class Projection():
             coord0 = points_3d[0, pair[0]]
             coord1 = points_3d[0, pair[1]]
 
-            if coord0[Z] > 0 or coord1[Z] > 0:
+            if coord0[Z] > 0 and coord1[Z] > 0:
                 pairs_for_projection.append(pair)
                 object_on_screen = True
             

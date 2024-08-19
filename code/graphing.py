@@ -96,8 +96,8 @@ class Graphing():
 
     # Plots lines between all specified points and pairs
     def construct_pairs(self, points, pairs, z_map, step_size=1, char="#"):  
-        y_bound = self.height/2
-        x_bound = self.width/2
+        y_bound = self.height
+        x_bound = self.width
 
         points = copy(points)
 
@@ -106,5 +106,6 @@ class Graphing():
                 coord0 = points[pair[0], 0]
                 coord1 = points[pair[1], 0]
 
-                if (coord0[Y] > -y_bound and coord1[Y] < y_bound) and (coord0[X] > -x_bound and coord1[X] < x_bound):
-                    self.line(coord0, coord1, char=char, step_size=step_size)
+                if (coord0[Y] > -y_bound and coord0[Y] < y_bound) and (coord0[X] > -x_bound and coord0[X] < x_bound):
+                    if (coord1[Y] > -y_bound and coord1[Y] < y_bound) and (coord1[X] > -x_bound and coord1[X] < x_bound):
+                        self.line(coord0, coord1, char=char, step_size=step_size)

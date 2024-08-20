@@ -178,7 +178,7 @@ sens = 1
 move_speed = .1
 
 bullet_speed = 1
-bullet_shot = True
+bullet_shot = False
 
 move_dir = [0, 0]
 

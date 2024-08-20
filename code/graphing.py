@@ -69,7 +69,7 @@ class Graphing():
 
         return pos_0, end_0, pos_1
 
-    def line(self, coord0, coord1, step_size=1, char="#", rounding=4, y_correction=True):
+    def line(self, coord0, coord1, step_size=1, char="#", rounding=4, y_correction=True, add_origin=True):
         run = coord0[X] - coord1[X]
         rise = coord0[Y] - coord1[Y]
 
@@ -81,7 +81,7 @@ class Graphing():
                                                     coord0=coord0, coord1=coord1)
                 
                 while pos_x <= end_x:
-                    self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
+                    self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction, add_origin=add_origin)
                     pos_x += step_size
                     pos_y += step_size * gradient
 
@@ -90,7 +90,7 @@ class Graphing():
                                                      coord0=coord0, coord1=coord1)
                 
                 while pos_y <= end_y:
-                    self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
+                    self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction, add_origin=add_origin)
                     pos_y += step_size
                     pos_x += step_size / gradient
         else:
@@ -98,7 +98,7 @@ class Graphing():
                                                     coord0=coord0, coord1=coord1)
             
             while pos_y <= end_y:
-                self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction)
+                self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction, add_origin=add_origin)
                 pos_y += step_size
 
     # Plots lines between all specified points and pairs
@@ -106,7 +106,7 @@ class Graphing():
         for pair in pairs:
             self.line(points[pair[0], 0], points[pair[1], 0], char=char, step_size=step_size)
 
-    def rectangle(self, coord0, coord1, char="#", y_correction=True):
+    def rectangle(self, coord0, coord1, char="#", y_correction=True, add_origin=True):
         a = copy(coord0)
         b = copy(coord0)
 
@@ -116,10 +116,10 @@ class Graphing():
         b[X] = c[X]
         d[X] = a[X]
 
-        self.line(a, b, step_size=1, char=char, y_correction=y_correction)
-        self.line(b, c, step_size=1, char=char, y_correction=y_correction)
-        self.line(c, d, step_size=1, char=char, y_correction=y_correction)
-        self.line(d, a, step_size=1, char=char, y_correction=y_correction)
+        self.line(a, b, step_size=1, char=char, y_correction=y_correction, add_origin=add_origin)
+        self.line(b, c, step_size=1, char=char, y_correction=y_correction, add_origin=add_origin)
+        self.line(c, d, step_size=1, char=char, y_correction=y_correction, add_origin=add_origin)
+        self.line(d, a, step_size=1, char=char, y_correction=y_correction, add_origin=add_origin)
 
     def fill(self, char="#"):
         self.array = np.full((self.height, self.width), char)

@@ -18,7 +18,7 @@ screen_height = 80
 screen_width = 150
 
 font = "Monospace"
-font_size = 10
+font_size = 12
 
 line_spacing = font_size
 
@@ -135,17 +135,29 @@ FPS: {fps}
 lines = info_text.split("\n")
 
 #
+# Various Centers
+#
+
+
+#
 # Main loop
 #
 while True:
     construct_world()
-    graphing.plot(y=0, x=0, char="+")
     
 
-    #graphing.fill()
-    graphing.rectangle(coord0=[-screen_height/2, -screen_width/2],
-                       coord1=[screen_height/2-1, screen_width/2-1],
-                       char=".", y_correction=False)
+    #
+    # HUD
+    #
+
+    # Crosshair
+    graphing.plot(y=0, x=0, char="+")
+
+    # Border
+    graphing.rectangle(coord0=[0, 0],
+                       coord1=[screen_height-1, screen_width-1],
+                       char=".", y_correction=False, add_origin=False)
+
 
     text_y = 0
     for line in lines:
@@ -153,6 +165,9 @@ while True:
         text_y += 1
 
     
+    #
+    # Movement
+    #
     move_dir, turn_dir = interface.update(graphing.array)
 
     if move_dir[X] != 0:

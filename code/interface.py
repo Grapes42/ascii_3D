@@ -129,10 +129,26 @@ class Interface():
                 self.mouse_dir[X] = event.rel[0] * (2 * pi) / self.display_surface.get_width()
                 self.mouse_dir[Y] = event.rel[1] * (2 * pi) / self.display_surface.get_width()
                 pygame.mouse.set_pos(self.display_surface.get_rect().center)
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    self.mouse_buttons[LEFT] = 1
+                elif event.button == 2:
+                    self.mouse_buttons[MIDDLE] = 1
+                elif event.button == 3:
+                    self.mouse_buttons[RIGHT] = 1
+
+            elif event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    self.mouse_buttons[LEFT] = 0
+                elif event.button == 2:
+                    self.mouse_buttons[MIDDLE] = 0
+                elif event.button == 3:
+                    self.mouse_buttons[RIGHT] = 0
             
 
     
         # update the display
         pygame.display.update()
 
-        return self.move_dir, self.mouse_dir
+        return self.move_dir, self.mouse_dir, self.mouse_buttons

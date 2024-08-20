@@ -12,6 +12,10 @@ Y = 0
 X = 1
 Z = 2
 
+LEFT = 0
+MIDDLE = 1
+RIGHT = 2
+
 pi = 3.14159265359
 
 screen_height = 80
@@ -30,17 +34,17 @@ fov = 90
 
 
 
-def construct_world():
-    for object in world:
+def construct(objects):
+    for object in objects:
         points, pairs = projection.map_to_2d(object.array, object.pairs)
         graphing.construct_pairs(points=points, pairs=pairs, step_size=1, char=object.char)
         
-def move_world(axis, amount):
-    for object in world:
+def move(objects, axis, amount):
+    for object in objects:
         object.move(axis=axis, amount=amount)
     
-def rotate_world(axis, amount):
-    for object in world:
+def rotate(objects, axis, amount):
+    for object in objects:
         object.rotate(origin=[0, 0, 0], rads=amount, axis=axis)
 
 fg_color = [182,242,216]
@@ -75,34 +79,35 @@ projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width
 #
 # Creating 3D objects
 #
-world = []
+objects = []
+bullets = []
 
 # Test shapes
 cube = Object3D(char=".")
 cube.array, cube.pairs = cube_by_center(x=0, y=0, z=5,
                                         height=1, width=1, depth=1)
-world.append(cube)
+objects.append(cube)
 
 cube1 = Object3D(char="~")
 cube1.array, cube1.pairs = cube_by_center(x=-1.2, y=.4, z=6,
                                         height=.2, width=1, depth=1)
-world.append(cube1)
+objects.append(cube1)
 
 
 pyramid = Object3D(char="*")
 pyramid.array, pyramid.pairs = pyramid_by_center(x=1, y=-.5, z=7,
                                         height=2, width=1, depth=1)
-world.append(pyramid)
+objects.append(pyramid)
 
 cube = Object3D(char="+")
 cube.array, cube.pairs = cube_by_center(x=2, y=0, z=-2,
                                         height=1, width=1, depth=1)
-world.append(cube)
+objects.append(cube)
 
 cube = Object3D(char="#")
 cube.array, cube.pairs = cube_by_center(x=-2, y=0, z=0,
                                         height=1, width=2, depth=2)
-world.append(cube)
+objects.append(cube)
 
 #cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
@@ -172,6 +177,8 @@ rads_from_horizon = 0
 sens = 1
 move_speed = .1
 
+bullet_speed = .5
+
 move_dir = [0, 0]
 
 
@@ -179,7 +186,9 @@ move_dir = [0, 0]
 # Main loop
 #
 while True:
-    construct_world()
+    world = objects + bullets
+
+    construct(world)
     
 
     #
@@ -208,35 +217,51 @@ while True:
     #
     # Movement
     #
-    move_dir, mouse_dir = interface.update(graphing.array)
+    move_dir, mouse_dir, mouse_buttons = interface.update(graphing.array)
 
     # Looking
     if mouse_dir[X] != 0:
         if rads_from_horizon != 0:
-            rotate_world(axis=X, amount=-rads_from_horizon)
-            rotate_world(axis=Y, amount=mouse_dir[X]*sens)
-            rotate_world(axis=X, amount=rads_from_horizon)
+            rotate(world, axis=X, amount=-rads_from_horizon)
+
+            rotate(world, axis=Y, amount=mouse_dir[X]*sens)
+
+            rotate(world, axis=X, amount=rads_from_horizon)
         else:
-            rotate_world(axis=Y, amount=mouse_dir[X]*sens)
+            rotate(world, axis=Y, amount=mouse_dir[X]*sens)
 
     if mouse_dir[Y] != 0:
         vert_amount = mouse_dir[Y] * sens
 
-        rotate_world(axis=X, amount=vert_amount)
+        rotate(world, axis=X, amount=vert_amount)
 
         rads_from_horizon += vert_amount
 
     # Turning
     if move_dir[X] != 0:
-        move_world(axis=X, amount=move_dir[X]*move_speed)
+        move(world, axis=X, amount=move_dir[X]*move_speed)
 
     if move_dir[Y] != 0:
         if rads_from_horizon != 0:
-            rotate_world(axis=X, amount=-rads_from_horizon)
-            move_world(axis=Z, amount=move_dir[Y]*move_speed)
-            rotate_world(axis=X, amount=rads_from_horizon)
+            rotate(world, axis=X, amount=-rads_from_horizon)
+            move(world, axis=Z, amount=move_dir[Y]*move_speed)
+            rotate(world, axis=X, amount=rads_from_horizon)
         else:
-            move_world(axis=Z, amount=move_dir[Y]*move_speed)
+            move(world, axis=Z, amount=move_dir[Y]*move_speed)
+
+    # Mouse buttons
+    if mouse_buttons[LEFT] == 1:
+        bullet = Object3D(char=".")
+        bullet.array, bullet.pairs = cube_by_center(x=0, y=0, z=1,
+                                                height=.2, width=.2, depth=.2)
+        bullets.append(bullet)
+
+
+    for bullet in bullets:
+        bullet.move(axis=Z, amount=bullet_speed)
+
+        if bullet.array[0, 0, Z] > 10:
+            bullets.remove(bullet)
 
     time.sleep(time_per_frame)
 

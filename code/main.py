@@ -78,28 +78,28 @@ projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width
 world = []
 
 # Test shapes
-cube = Object3D(char="F")
+cube = Object3D(char=".")
 cube.array, cube.pairs = cube_by_center(x=0, y=0, z=5,
                                         height=1, width=1, depth=1)
 world.append(cube)
 
-cube1 = Object3D(char="A")
+cube1 = Object3D(char="~")
 cube1.array, cube1.pairs = cube_by_center(x=-1.2, y=.4, z=6,
                                         height=.2, width=1, depth=1)
 world.append(cube1)
 
 
-pyramid = Object3D(char="G")
+pyramid = Object3D(char="*")
 pyramid.array, pyramid.pairs = pyramid_by_center(x=1, y=-.5, z=7,
                                         height=2, width=1, depth=1)
 world.append(pyramid)
 
-cube = Object3D(char="F")
+cube = Object3D(char="+")
 cube.array, cube.pairs = cube_by_center(x=2, y=0, z=-2,
                                         height=1, width=1, depth=1)
 world.append(cube)
 
-cube = Object3D(char="F")
+cube = Object3D(char="#")
 cube.array, cube.pairs = cube_by_center(x=-2, y=0, z=0,
                                         height=1, width=2, depth=2)
 world.append(cube)

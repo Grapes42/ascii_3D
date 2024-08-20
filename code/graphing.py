@@ -124,7 +124,8 @@ class Graphing():
     def fill(self, char="#"):
         self.array = np.full((self.height, self.width), char)
 
-    def write(self, message, y, x, y_correction=False, add_origin=False):
+    def write(self, message, y, x, y_correction=False, add_origin=False, gap_char=None):
         for char in message:
-            self.plot(y=y, x=x, char=char, y_correction=y_correction, add_origin=add_origin)
+            if char != gap_char:
+                self.plot(y=y, x=x, char=char, y_correction=y_correction, add_origin=add_origin)
             x += 1

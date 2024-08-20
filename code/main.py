@@ -178,6 +178,7 @@ sens = 1
 move_speed = .1
 
 bullet_speed = .5
+bullet_shot = True
 
 move_dir = [0, 0]
 
@@ -250,11 +251,16 @@ while True:
             move(world, axis=Z, amount=move_dir[Y]*move_speed)
 
     # Mouse buttons
-    if mouse_buttons[LEFT] == 1:
+    if mouse_buttons[LEFT] == 0:
+        bullet_shot = False
+
+    elif mouse_buttons[LEFT] == 1 and not bullet_shot:
         bullet = Object3D(char=".")
         bullet.array, bullet.pairs = cube_by_center(x=0, y=0, z=1,
                                                 height=.2, width=.2, depth=.2)
         bullets.append(bullet)
+
+        bullet_shot = True
 
 
     for bullet in bullets:

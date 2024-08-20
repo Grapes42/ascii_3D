@@ -212,8 +212,12 @@ while True:
         move_world(axis=X, amount=move_dir[X]*move_speed)
 
     if move_dir[Y] != 0:
-        move_world(axis=Z, amount=move_dir[Y]*move_speed)
-
+        if rads_from_horizon != 0:
+            rotate_world(axis=X, amount=-rads_from_horizon)
+            move_world(axis=Z, amount=move_dir[Y]*move_speed)
+            rotate_world(axis=X, amount=rads_from_horizon)
+        else:
+            move_world(axis=Z, amount=move_dir[Y]*move_speed)
 
     if turn_dir[X] != 0:
         if rads_from_horizon != 0:

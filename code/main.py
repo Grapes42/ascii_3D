@@ -177,7 +177,7 @@ rads_from_horizon = 0
 sens = 1
 move_speed = .1
 
-bullet_speed = .5
+bullet_speed = 1
 bullet_shot = True
 
 move_dir = [0, 0]

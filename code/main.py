@@ -166,6 +166,8 @@ pistol_lines = pistol.split("\n")
 pistol_y = screen_height - len(pistol_lines)
 pistol_x = screen_width/2 - 20
 
+rads_from_horizon = 0
+
 #
 # Various Centers
 #
@@ -214,10 +216,20 @@ while True:
 
 
     if turn_dir[X] != 0:
-        rotate_world(axis=Y, amount=turn_dir[X]*sens)
+        if rads_from_horizon != 0:
+            rotate_world(axis=X, amount=-rads_from_horizon)
+            rotate_world(axis=Y, amount=turn_dir[X]*sens)
+            rotate_world(axis=X, amount=rads_from_horizon)
+        else:
+            rotate_world(axis=Y, amount=turn_dir[X]*sens)
 
     if turn_dir[Y] != 0:
-        rotate_world(axis=X, amount=turn_dir[Y]*sens)
+        vert_amount = turn_dir[Y]*sens 
+        rotate_world(axis=X, amount=vert_amount)
+
+        rads_from_horizon += vert_amount
+
+    print(rads_from_horizon)
 
     time.sleep(time_per_frame)
 

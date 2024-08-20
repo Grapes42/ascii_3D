@@ -108,11 +108,7 @@ world.append(cube)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
 
-# Control Parameters
-sens = .05
-move_speed = .1
 
-move_dir = [0, 0]
 
 # Info message
 info_text = f"""
@@ -172,6 +168,12 @@ rads_from_horizon = 0
 # Various Centers
 #
 
+# Control Parameters
+sens = 1
+move_speed = .1
+
+move_dir = [0, 0]
+
 
 #
 # Main loop
@@ -206,8 +208,25 @@ while True:
     #
     # Movement
     #
-    move_dir, turn_dir = interface.update(graphing.array)
+    move_dir, mouse_dir = interface.update(graphing.array)
 
+    # Looking
+    if mouse_dir[X] != 0:
+        if rads_from_horizon != 0:
+            rotate_world(axis=X, amount=-rads_from_horizon)
+            rotate_world(axis=Y, amount=mouse_dir[X]*sens)
+            rotate_world(axis=X, amount=rads_from_horizon)
+        else:
+            rotate_world(axis=Y, amount=mouse_dir[X]*sens)
+
+    if mouse_dir[Y] != 0:
+        vert_amount = mouse_dir[Y] * sens
+
+        rotate_world(axis=X, amount=vert_amount)
+
+        rads_from_horizon += vert_amount
+
+    # Turning
     if move_dir[X] != 0:
         move_world(axis=X, amount=move_dir[X]*move_speed)
 
@@ -218,22 +237,6 @@ while True:
             rotate_world(axis=X, amount=rads_from_horizon)
         else:
             move_world(axis=Z, amount=move_dir[Y]*move_speed)
-
-    if turn_dir[X] != 0:
-        if rads_from_horizon != 0:
-            rotate_world(axis=X, amount=-rads_from_horizon)
-            rotate_world(axis=Y, amount=turn_dir[X]*sens)
-            rotate_world(axis=X, amount=rads_from_horizon)
-        else:
-            rotate_world(axis=Y, amount=turn_dir[X]*sens)
-
-    if turn_dir[Y] != 0:
-        vert_amount = turn_dir[Y]*sens 
-        rotate_world(axis=X, amount=vert_amount)
-
-        rads_from_horizon += vert_amount
-
-    print(rads_from_horizon)
 
     time.sleep(time_per_frame)
 

@@ -8,14 +8,20 @@ MIDDLE = 1
 RIGHT = 2
 
 class Interface():
-    def __init__(self, chars_height, chars_width, pixel_height, pixel_width, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
+    def __init__(self, chars_height, chars_width, border=2, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
         # Sets the width and height of the character array
         self.chars_height = chars_height
         self.chars_width = chars_width
 
-        # Style parameters
+        # Sets the font and font size
         self.font = font
         self.font_size = font_size
+
+        # Sets the width and height of the window based on the font size and character array size
+        self.border = border 
+
+        self.pixel_height = line_spacing * (self.chars_height + border * 2) # height based on line spacing * (no of rows + border)
+        self.pixel_width = (.6 * font_size) * (self.chars_width + border * 4) # width based on magic number (will be improved later) * (no of columns + border)
 
         self.fg_color = fg_color
         self.bg_color = bg_color
@@ -24,7 +30,7 @@ class Interface():
         pygame.font.init()
         pygame.font.get_init()
         
-        self.display_surface = pygame.display.set_mode((pixel_width, pixel_height))
+        self.display_surface = pygame.display.set_mode((self.pixel_width, self.pixel_height))
         
         pygame.display.set_caption("Ascii 3D")
 
@@ -39,13 +45,12 @@ class Interface():
         # Defining the rectangles for the rows to sit in
         self.rectangles = []
 
-        y_pos = 40
-
+        y_pos = line_spacing * border
 
         for y in range(self.chars_height):
             self.rectangles.append(self.rendered_rows[y].get_rect())
 
-            self.rectangles[y].center = (round(pixel_width/2),y_pos)
+            self.rectangles[y].center = (self.pixel_width/2,y_pos)
 
             y_pos += line_spacing
 

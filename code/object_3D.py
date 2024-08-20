@@ -67,6 +67,9 @@ class Object3D():
             # b negative, a positive
             elif b_i < b_o and a_i > a_o:
                 angle_corrector = math.atan(a_from_origin / b_from_origin) + (1.5 * pi)
+
+            else:
+                angle_corrector = 0
                 
             # Calculate the point's rotated value
             a_f = radius * math.cos(rads+angle_corrector) + a_o

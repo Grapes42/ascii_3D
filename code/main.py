@@ -70,26 +70,7 @@ interface = Interface(chars_height=screen_height, chars_width=screen_width,
 # Defining the object for projection
 projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width)
 
-#
-# Startup Message
-#
-pyeth = """ 
- ____             _   _     
-|  _ \ _   _  ___| |_| |__  
-| |_) | | | |/ _ \ __| '_ \ 
-|  __/| |_| |  __/ |_| | | |
-|_|    \__, |\___|\__|_| |_|
-       |___/                
-"""
 
-print(f"""{"\n"*5}{pyeth}
-An ASCII 3D renderer by Max Dowdall
-      
-Character Array: {screen_height} x {screen_width}
-Window: {interface.pixel_width}px x {interface.pixel_height}px
-Font: {font}, size {font_size}
-FOV: {fov}
-FPS: {fps}""")
 
 #
 # Creating 3D objects
@@ -127,22 +108,50 @@ world.append(cube)
 #cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
 
-
-#
-# Main loop
-#
+# Control Parameters
 sens = .05
 move_speed = .1
 
 move_dir = [0, 0]
+
+# Info message
+info_text = f"""
+ ____             _   _     
+|  _ \ _   _  ___| |_| |__  
+| |_) | | | |/ _ \ __| '_ \ 
+|  __/| |_| |  __/ |_| | | |
+|_|    \__, |\___|\__|_| |_|
+       |___/
+
+by Max Dowdall
+
+Character Array: {interface.chars_width} x {interface.chars_height}
+Window: {interface.pixel_width}px x {interface.pixel_height}px
+Font: {interface.font_selector}, size {interface.font_size}
+FOV: {fov}
+FPS: {fps}
+"""
+
+lines = info_text.split("\n")
+
+#
+# Main loop
+#
 while True:
     construct_world()
     graphing.plot(y=0, x=0, char="+")
+    
 
     #graphing.fill()
     graphing.rectangle(coord0=[-screen_height/2, -screen_width/2],
                        coord1=[screen_height/2-1, screen_width/2-1],
                        char=".", y_correction=False)
+
+    text_y = 0
+    for line in lines:
+        graphing.write(y=text_y, x=2, message=line, add_origin=False)
+        text_y += 1
+
     
     move_dir, turn_dir = interface.update(graphing.array)
 

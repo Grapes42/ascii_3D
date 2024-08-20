@@ -14,14 +14,14 @@ class Interface():
         self.chars_width = chars_width
 
         # Sets the font and font size
-        self.font = font
+        self.font_selector = font
         self.font_size = font_size
 
         # Sets the width and height of the window based on the font size and character array size
         self.border = border 
 
-        self.pixel_height = line_spacing * (self.chars_height + border * 2) # height based on line spacing * (no of rows + border)
-        self.pixel_width = (.6 * font_size) * (self.chars_width + border * 4) # width based on magic number (will be improved later) * (no of columns + border)
+        self.pixel_height = round(line_spacing * (self.chars_height + border * 2)) # height based on line spacing * (no of rows + border)
+        self.pixel_width = round((.6 * font_size) * (self.chars_width + border * 4)) # width based on magic number (will be improved later) * (no of columns + border)
 
         self.fg_color = fg_color
         self.bg_color = bg_color
@@ -34,7 +34,7 @@ class Interface():
         
         pygame.display.set_caption("Ascii 3D")
 
-        self.font = pygame.font.SysFont(font, font_size)
+        self.font = pygame.font.SysFont(self.font_selector, font_size)
 
         # Defining the blank screen rows
         self.rendered_rows = []

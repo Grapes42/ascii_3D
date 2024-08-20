@@ -25,13 +25,17 @@ class Graphing():
     def clear(self):
         self.array = np.full((self.height, self.width), " ")
 
-    def plot(self, y, x, char="#", y_correction=True):
-        # Round points to character array
+    def plot(self, y, x, char="#", y_correction=True, add_origin=True):
         if y_correction:
-            y = round(y*self.y_correction + self.origin_y)
-        else:
-            y = round(y + self.origin_y)
-        x = round(x + self.origin_x)
+            y *= self.y_correction
+        if add_origin:
+            y += self.origin_y
+            x += self.origin_x
+
+        # Round points to character array
+        y = round(y)
+        x = round(x)
+
 
         # Check if point is within the screen's Y boundary
         if (y < 0) or (y > self.height-1):
@@ -119,3 +123,8 @@ class Graphing():
 
     def fill(self, char="#"):
         self.array = np.full((self.height, self.width), char)
+
+    def write(self, message, y, x, y_correction=False, add_origin=False):
+        for char in message:
+            self.plot(y=y, x=x, char=char, y_correction=y_correction, add_origin=add_origin)
+            x += 1

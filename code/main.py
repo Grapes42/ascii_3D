@@ -180,6 +180,8 @@ move_speed = .1
 bullet_speed = 1
 bullet_shot = False
 
+object_placed = False
+
 move_dir = [0, 0]
 
 
@@ -261,6 +263,17 @@ while True:
         bullets.append(bullet)
 
         bullet_shot = True
+
+    if mouse_buttons[RIGHT] == 0:
+        object_placed = False
+
+    elif mouse_buttons[RIGHT] == 1 and not object_placed:
+        cube = Object3D(char="+")
+        cube.array, cube.pairs = cube_by_center(x=0, y=0, z=2,
+                                                height=.5, width=.5, depth=.5)
+        objects.append(cube)
+
+        object_placed = True
 
 
     for bullet in bullets:

@@ -132,7 +132,40 @@ FOV: {fov}
 FPS: {fps}
 """
 
-lines = info_text.split("\n")
+pistol = """                   
+                   :*:                            
+                 .,,:,.                           
+               .+=++**+,.                         
+              .++,**=++:..                        
+              .::,+=#=+,,,                        
+              .:+*###==:::                        
+              .:*==##==+++,                       
+             .+==#====+==+:.                      
+           :++*###==+::+++++,                     
+        :*=##==#W##=+::,,:+===+.                  
+        .,:#=+=W##==*++,. :+::,+                  
+        ,+::+:=#==:..   .  ,::..                  
+         .++++#=*,        .::+                    
+         :++++W=*+::.    ,:+,:.:=*:               
+         ++*+:=====+:,,::++:.,.:====.             
+     ,:::::,,+*+: . .    ....:==#####==+.         
+   :======#==*:==+=:+,,....*==########===+        
+  :===####W@@@##==**+*===##WW##########==*        
+ .+=++=###W@WWW######==######==########==+:       
+ ,+:.:===##################==####========+==:     
+  .:::*===#######WWW#########==========*+:+=:     
+     :++===###==##=##########==#========+:,,      
+     ...:+=====+=====#############==####=++,      
+         ,:+*======########======####==#=+:       
+         . .:++:+========######WWW#####===+       
+          . .,:*=+*==#====#######========#==+.    
+          ..  :,+=##=###===###WW##==========+::+:
+"""
+
+info_text_lines = info_text.split("\n")
+pistol_lines = pistol.split("\n")
+pistol_y = screen_height - len(pistol_lines)
+pistol_x = screen_width/2 - 20
 
 #
 # Various Centers
@@ -160,10 +193,14 @@ while True:
 
 
     text_y = 0
-    for line in lines:
+    for line in info_text_lines:
         graphing.write(y=text_y, x=2, message=line, add_origin=False)
         text_y += 1
 
+    text_y = pistol_y
+    for line in pistol_lines:
+        graphing.write(y=text_y, x=pistol_x, message=line, add_origin=False)
+        text_y += 1
     
     #
     # Movement

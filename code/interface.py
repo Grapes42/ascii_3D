@@ -80,6 +80,10 @@ An ASCII 3D rendering program by Max Dowdall.
 What you will see next is an example of where the 
 software currently is (as of 22/08/24).
 
+I have many plans to use this program to create some 80's sci-fi-esque
+games inspired by computer graphics in the likes of "Alien (1979)". 
+And some 3D versions of classic rouguelikes like "Nethack".
+
 Information about the current scene will be at the top left.
 
 The controls will be at the bottom left.

@@ -184,15 +184,16 @@ Font: {interface.font_selector}, size {interface.font_size}
 
 FOV: {fov}
 FPS: {fps}
-
-Movement Speed: {move_speed}
-Look Sensitivity: {sens}
 """
 
-controls_text = """Move: WASD
+controls_text = f"""Movement Speed: {move_speed}
+Look Sensitivity: {sens}
+
+Move: WASD
 Look: Mouse Movement
 Shoot: Left Click
-Spawn Cube: Right Click"""
+Spawn Cube: Right Click
+Exit: ESC"""
 
 info_text_lines = info_text.split("\n")
 

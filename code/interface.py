@@ -10,7 +10,7 @@ RIGHT = 2
 pi = 3.14159265359
 
 class Interface():
-    def __init__(self, chars_height, chars_width, border=2, font="Monospace", font_size=5, line_spacing=1, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
+    def __init__(self, chars_height, chars_width, border=2, line_spacing=10, font="Monospace", font_size=5, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
         # Sets the width and height of the character array
         self.chars_height = chars_height
         self.chars_width = chars_width
@@ -18,15 +18,21 @@ class Interface():
         # Sets the font and font size
         self.font_selector = font
         self.font_size = font_size
+        self.line_spacing = line_spacing
+
+        self.border = border
 
         # Sets the width and height of the window based on the font size and character array size
         self.border = border 
 
-        self.pixel_height = round(line_spacing * (self.chars_height + border * 2)) # height based on line spacing * (no of rows + border)
+        self.pixel_height = round(self.line_spacing * (self.chars_height + border * 2)) # height based on line spacing * (no of rows + border)
         self.pixel_width = round((.6 * font_size) * (self.chars_width + border * 4)) # width based on magic number (will be improved later) * (no of columns + border)
 
         self.fg_color = fg_color
         self.bg_color = bg_color
+
+        self.rendered_rows = []
+        self.rectangles = []
 
         # PyGame window setup
         pygame.init()
@@ -38,27 +44,86 @@ class Interface():
         
         self.display_surface = pygame.display.set_mode((self.pixel_width, self.pixel_height))
         
-        pygame.display.set_caption("Ascii 3D")
+        pygame.display.set_caption("Pyeth - by Max Dowdall")
 
-        self.font = pygame.font.SysFont(self.font_selector, font_size)
+    def startup_screen(self):
+        startup_font = pygame.font.SysFont(self.font_selector, 20)
+        startup_spacing = 24
 
-        # Defining the blank screen rows
+        startup_text = """ ____             _   _     
+|  _ \ _   _  ___| |_| |__  
+| |_) | | | |/ _ \ __| '_ \ 
+|  __/| |_| |  __/ |_| | | |
+|_|    \__, |\___|\__|_| |_|
+       |___/                
+       
+An ASCII 3D rendering program by Max Dowdall.
+
+
+What you will see next is an example of where the 
+software currently is (as of 22/08/24).
+
+Information about the current scene will be at the top left.
+
+The controls will be at the bottom left.
+
+
+
+Press any key to continue"""
+        startup_lines = startup_text.split("\n")
+        
+        # Define blank lines to create rectangles
+        for line in startup_lines:
+            self.rendered_rows.append(startup_font.render(line, True, self.fg_color))
+
+        y_pos = self.pixel_height/2 - (startup_spacing * len(self.rendered_rows) / 2)
+
+        # Create rectangles
+        for i in range(len(self.rendered_rows)):
+            self.rectangles.append(self.rendered_rows[i].get_rect())
+
+            self.rectangles[i].center = (self.pixel_width/2,y_pos)
+
+            y_pos += startup_spacing
+
+        # Adds background and text to the window
+        self.display_surface.fill(self.bg_color)
+
+        # Prints out all the characters
+        for i in range(len(self.rendered_rows)):
+            self.display_surface.blit(self.rendered_rows[i], self.rectangles[i])
+        
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                    return
+
+
+        
+        
+        
+
+    def setup_game_window(self):
         self.rendered_rows = []
-
-        for y in range(self.chars_height):
-            self.rendered_rows.append(self.font.render("#"*chars_width, True, self.fg_color))
-
-        # Defining the rectangles for the rows to sit in
         self.rectangles = []
 
-        y_pos = line_spacing * border
+        self.font = pygame.font.SysFont(self.font_selector, self.font_size)
 
+        # Define blank lines to create rectangles
+        for y in range(self.chars_height):
+            self.rendered_rows.append(self.font.render(" "*self.chars_width, True, self.fg_color))
+
+        y_pos = self.line_spacing * self.border
+
+        # Create rectangles
         for y in range(self.chars_height):
             self.rectangles.append(self.rendered_rows[y].get_rect())
 
             self.rectangles[y].center = (self.pixel_width/2,y_pos)
 
-            y_pos += line_spacing
+            y_pos += self.line_spacing
 
         
         # Controls variables
@@ -85,6 +150,7 @@ class Interface():
         # Adds background and text to the window
         self.display_surface.fill(self.bg_color)
 
+        # Prints out all the characters
         for y in range(self.chars_height):
             self.display_surface.blit(self.rendered_rows[y], self.rectangles[y])
 

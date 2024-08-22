@@ -100,7 +100,9 @@ move_speed = settings["movement_speed"]
 
 bullet_speed = settings["bullet_speed"]
 
+#
 # Sprites
+#
 
 pistol_lines = grab_art(pistol_path)
 
@@ -159,8 +161,6 @@ cube.array, cube.pairs = cube_by_center(x=-2, y=0, z=0,
                                         height=1, width=2, depth=2)
 objects.append(cube)
 
-#cube.rotate(origin=[0, 0, 10], rads=.4, axis=Z)
-#cube.rotate(origin=[0, 0, 10], rads=.5, axis=X)
 
 
 
@@ -217,8 +217,15 @@ move_dir = [0, 0]
 
 
 #
+# Startup Screen
+#
+interface.startup_screen()
+
+#
 # Main loop
 #
+interface.setup_game_window()
+
 while True:
     world = objects + bullets
     construct(world)

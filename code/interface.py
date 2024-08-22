@@ -62,7 +62,7 @@ class Interface():
 
         # Sets the font and font size
         startup_font = pygame.font.SysFont(self.font_selector, 20)
-        startup_spacing = 24
+        startup_spacing = 25
 
         startup_text = """
                                   +------+
@@ -87,6 +87,8 @@ And some 3D versions of classic rouguelikes like "Nethack".
 Information about the current scene will be at the top left.
 
 The controls will be at the bottom left.
+
+Settings can by editing "settings.eth" and restarting the program.
 
 
 

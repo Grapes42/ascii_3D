@@ -1,5 +1,3 @@
-import os
-
 settings = """# Visual Settings
 
 screen_height: 80

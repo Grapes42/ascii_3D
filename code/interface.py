@@ -194,15 +194,11 @@ Press any key to continue"""
         # Checks input events
         for event in pygame.event.get():
 
-            if event.type == pygame.QUIT:
-                # deactivating the pygame library
-                pygame.quit()
-    
-                # quitting the program.
-                quit()
-
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    print("\n\nThanks for testing out Pyeth!")
+                    print("More info about the project can be found at https://github.com/Grapes42/pyeth")
+
                     pygame.quit()
                     quit()
 

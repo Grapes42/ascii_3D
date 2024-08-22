@@ -179,8 +179,12 @@ by Max Dowdall
 Character Array: {interface.chars_width} x {interface.chars_height}
 Window: {interface.pixel_width}px x {interface.pixel_height}px
 Font: {interface.font_selector}, size {interface.font_size}
+
 FOV: {fov}
 FPS: {fps}
+
+Movement Speed: {move_speed}
+Look Sensitivity: {sens}
 """
 
 controls_text = """Move: WASD
@@ -200,21 +204,6 @@ pistol_x = screen_width/2 - 20
 
 rads_from_horizon = 0
 
-#
-# Various Centers
-#
-
-# Control Parameters
-sens = 1
-move_speed = .1
-
-bullet_speed = 1
-bullet_shot = False
-
-object_placed = False
-
-move_dir = [0, 0]
-
 
 #
 # Startup Screen
@@ -225,6 +214,8 @@ interface.startup_screen()
 # Main loop
 #
 interface.setup_game_window()
+
+object_placed = False
 
 while True:
     world = objects + bullets
@@ -261,30 +252,34 @@ while True:
         graphing.write(y=text_y, x=pistol_x, message=line, add_origin=False, gap_char="|")
         text_y += 1
     
-    #
-    # Movement
-    #
+    # Inputs
     move_dir, mouse_dir, mouse_buttons = interface.update(graphing.array)
 
     # Looking
     if mouse_dir[X] != 0:
         if rads_from_horizon != 0:
             rotate(world, axis=X, amount=-rads_from_horizon)
-
             rotate(world, axis=Y, amount=mouse_dir[X]*sens)
-
             rotate(world, axis=X, amount=rads_from_horizon)
         else:
             rotate(world, axis=Y, amount=mouse_dir[X]*sens)
 
     if mouse_dir[Y] != 0:
-        vert_amount = mouse_dir[Y] * sens
+        at_up_limit = (rads_from_horizon <= -pi/2) and (mouse_dir[Y] < 0)
+        at_down_limit = (rads_from_horizon >= pi/2) and (mouse_dir[Y] > 0)
 
-        rotate(world, axis=X, amount=vert_amount)
 
-        rads_from_horizon += vert_amount
+        if not at_up_limit and not at_down_limit:
+            vert_amount = mouse_dir[Y] * sens
 
-    # Turning
+            rotate(world, axis=X, amount=vert_amount)
+
+            rads_from_horizon += vert_amount
+        
+    print(rads_from_horizon)
+    print(mouse_dir)
+
+    # Movement    
     if move_dir[X] != 0:
         move(world, axis=X, amount=move_dir[X]*move_speed)
 

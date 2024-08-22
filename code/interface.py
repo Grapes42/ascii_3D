@@ -50,14 +50,17 @@ class Interface():
         startup_font = pygame.font.SysFont(self.font_selector, 20)
         startup_spacing = 24
 
-        startup_text = """ ____             _   _     
-|  _ \ _   _  ___| |_| |__  
-| |_) | | | |/ _ \ __| '_ \ 
-|  __/| |_| |  __/ |_| | | |
-|_|    \__, |\___|\__|_| |_|
-       |___/                
+        startup_text = """
+                                  +------+
+ ____             _   _          /|     /|
+|  _ \ _   _  ___| |_| |__      +-+----+ |
+| |_) | | | |/ _ \ __| '_ \     | |    | |
+|  __/| |_| |  __/ |_| | | |    | +----+ +
+|_|    \__, |\___|\__|_| |_|    |/     |/ 
+       |___/                    +------+  
        
 An ASCII 3D rendering program by Max Dowdall.
+
 
 
 What you will see next is an example of where the 
@@ -70,6 +73,7 @@ The controls will be at the bottom left.
 
 
 Press any key to continue"""
+
         startup_lines = startup_text.split("\n")
         
         # Define blank lines to create rectangles

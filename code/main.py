@@ -28,10 +28,10 @@ pi = 3.14159265359
 
 # Paths
 if name == 'nt': # If windows
-    settings_path = "./settings.eth"
+    settings_path = "./settings.txt"
     pistol_path = "./code/ascii_art/pistol.eth"
 else: # If linux
-    settings_path = "../settings.eth"
+    settings_path = "../settings.txt"
     pistol_path = "ascii_art/pistol.eth"
 
 

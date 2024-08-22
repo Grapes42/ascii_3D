@@ -1,7 +1,14 @@
+"""
+File: projection.py
+
+Usage: Handles all the logic of projecting 3D points in space to a 2D screen.
+"""
+
 import numpy as np
 import cv2
 from copy import copy
 
+# Constants
 Y = 0
 X = 1
 Z = 2
@@ -9,6 +16,7 @@ Z = 2
 class Projection():
     def __init__(self, height, width, fx=800, fy=800, cx=0, cy=0) -> None:
 
+        # Sets the height and width of the character array
         self.height = height
         self.width = width
 
@@ -26,9 +34,14 @@ class Projection():
         self.rvec = np.zeros((3, 1), np.float32)
         self.tvec = np.zeros((3, 1), np.float32)
 
+        # Goals to do this projection maths from scratch
 
-    def map_to_2d(self, points_3d, pairs):
+
+
+    def map_to_2d(self, points_3d, pairs) -> {list, list}:
         points_3d = copy(points_3d)
+
+        # Define boundaries of the projection
         y_bound = self.height
         x_bound = self.width
 
@@ -36,6 +49,7 @@ class Projection():
 
         object_on_screen = False
 
+        # Remove all pairs behind the camera
         for pair in pairs:
             coord0 = points_3d[0, pair[0]]
             coord1 = points_3d[0, pair[1]]
@@ -44,10 +58,10 @@ class Projection():
                 pairs_for_projection.append(pair)
                 object_on_screen = True
             
-
-
+        # If entire object is not on screen, skip
         if not object_on_screen:
             return [], []
+
 
 
         # Map 3D points to a 2D plane
@@ -58,6 +72,7 @@ class Projection():
         
         pairs_for_rendering = []
         
+        # Check each point to see if its on the screen
         for pair in pairs_for_projection:
             coord0_in_y_bound = points_2d[pair[0], 0, Y] > -y_bound and points_2d[pair[0], 0, Y] < y_bound
             coord0_in_x_bound = points_2d[pair[0], 0, X] > -x_bound and points_2d[pair[0], 0, X] < x_bound

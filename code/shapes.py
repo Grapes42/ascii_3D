@@ -1,6 +1,12 @@
+"""
+File: shapes.py
+
+Usage: Provides presets for regular shapes.
+"""
+
 import numpy as np
 
-def cube_by_center(y=0, x=0, z=0, width=1, height=1, depth=1):
+def cube_by_center(y=0, x=0, z=0, width=1, height=1, depth=1) -> {list, list}:
         points_3d = np.array([[     
                 [y-(height/2), x-(width/2), z-(depth/2)], # Top left front
                 [y+(height/2), x-(width/2), z-(depth/2)], # Bottom left front
@@ -35,7 +41,7 @@ def dodecahedron_by_center(y=0, x=0, z=0):
                             ]])
 """
 
-def pyramid_by_center(y=0, x=0, z=0, width=1, height=1, depth=1):
+def pyramid_by_center(y=0, x=0, z=0, width=1, height=1, depth=1) -> {list, list}:
         points_3d = np.array([[
                 [y+(height/2), x-(width/2), z-(depth/2)],
                 [y+(height/2), x+(width/2), z-(depth/2)],
@@ -53,7 +59,7 @@ def pyramid_by_center(y=0, x=0, z=0, width=1, height=1, depth=1):
 
 
 
-def cube_by_corners(x0, y0, z0, x1, y1, z1):
+def cube_by_corners(x0, y0, z0, x1, y1, z1) -> {list, list}:
         points_3d = np.array([[     
                 [y0, x0, z0], # Coord0                0
                 [y1, x0, z0], # Coord0, Coord1 y      1

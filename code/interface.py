@@ -1,5 +1,12 @@
+"""
+File: interface.py
+
+Usage: Handles all input and output.
+"""
+
 import pygame
 
+# Constants
 Y = 0
 X = 1
 
@@ -11,6 +18,7 @@ pi = 3.14159265359
 
 class Interface():
     def __init__(self, chars_height, chars_width, border=2, line_spacing=10, font="Monospace", font_size=5, fg_color=(255,255,255), bg_color=(0,0,0)) -> None:
+
         # Sets the width and height of the character array
         self.chars_height = chars_height
         self.chars_width = chars_width
@@ -34,6 +42,8 @@ class Interface():
         self.rendered_rows = []
         self.rectangles = []
 
+
+
         # PyGame window setup
         pygame.init()
 
@@ -46,7 +56,11 @@ class Interface():
         
         pygame.display.set_caption("Pyeth - by Max Dowdall")
 
-    def startup_screen(self):
+
+
+    def startup_screen(self) -> None:
+
+        # Sets the font and font size
         startup_font = pygame.font.SysFont(self.font_selector, 20)
         startup_spacing = 24
 
@@ -75,12 +89,16 @@ The controls will be at the bottom left.
 Press any key to continue"""
 
         startup_lines = startup_text.split("\n")
+
+
         
         # Define blank lines to create rectangles
         for line in startup_lines:
             self.rendered_rows.append(startup_font.render(line, True, self.fg_color))
 
         y_pos = self.pixel_height/2 - (startup_spacing * len(self.rendered_rows) / 2)
+
+
 
         # Create rectangles
         for i in range(len(self.rendered_rows)):
@@ -90,6 +108,8 @@ Press any key to continue"""
 
             y_pos += startup_spacing
 
+
+
         # Adds background and text to the window
         self.display_surface.fill(self.bg_color)
 
@@ -97,8 +117,12 @@ Press any key to continue"""
         for i in range(len(self.rendered_rows)):
             self.display_surface.blit(self.rendered_rows[i], self.rectangles[i])
         
+        # Update the window
         pygame.display.update()
 
+
+
+        # Check input events
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
@@ -106,13 +130,13 @@ Press any key to continue"""
 
 
         
-        
-        
+    def setup_game_window(self) -> None:
 
-    def setup_game_window(self):
+        # Reset rows and rectangles
         self.rendered_rows = []
         self.rectangles = []
 
+        # Set font
         self.font = pygame.font.SysFont(self.font_selector, self.font_size)
 
         # Define blank lines to create rectangles
@@ -120,6 +144,8 @@ Press any key to continue"""
             self.rendered_rows.append(self.font.render(" "*self.chars_width, True, self.fg_color))
 
         y_pos = self.line_spacing * self.border
+
+
 
         # Create rectangles
         for y in range(self.chars_height):
@@ -130,6 +156,7 @@ Press any key to continue"""
             y_pos += self.line_spacing
 
         
+
         # Controls variables
         self.mouse_dir = [0, 0]
         self.mouse_buttons = [0, 0, 0]
@@ -137,7 +164,9 @@ Press any key to continue"""
         self.move_dir = [0, 0]
 
 
-    def update(self, array):
+
+    def update(self, array) -> {list, list, list}:
+
         # Converts the character array into a list of row strings
         str_rows = []
 
@@ -146,6 +175,8 @@ Press any key to continue"""
             for x in range(len(array[0])):
                 line += str(array[y, x])
             str_rows.append(line)
+
+
 
         # Renders each row and appends them to a list
         for y in range(self.chars_height):
@@ -159,10 +190,11 @@ Press any key to continue"""
             self.display_surface.blit(self.rendered_rows[y], self.rectangles[y])
 
 
+
+        # Checks input events
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
-            
                 # deactivating the pygame library
                 pygame.quit()
     
@@ -174,7 +206,7 @@ Press any key to continue"""
                     pygame.quit()
                     quit()
 
-                # Move
+                # Movement
                 elif event.key == pygame.K_w: 
                     self.move_dir[Y] -= 1
                 elif event.key == pygame.K_s: 
@@ -185,7 +217,7 @@ Press any key to continue"""
                     self.move_dir[X] -= 1
 
             elif event.type == pygame.KEYUP:
-                # Move
+                # Movement
                 if event.key == pygame.K_w: 
                     self.move_dir[Y] += 1
                 elif event.key == pygame.K_s: 
@@ -196,8 +228,11 @@ Press any key to continue"""
                     self.move_dir[X] += 1
            
             elif event.type == pygame.MOUSEMOTION:
+                # Add the mouse x and y velocities to the mouse motion list
                 self.mouse_dir[X] = event.rel[0] * (2 * pi) / self.display_surface.get_width()
                 self.mouse_dir[Y] = event.rel[1] * (2 * pi) / self.display_surface.get_width()
+
+                # Move the mouse back to the center of the window
                 pygame.mouse.set_pos(self.display_surface.get_rect().center)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -218,7 +253,7 @@ Press any key to continue"""
             
 
     
-        # update the display
+        # Update the window
         pygame.display.update()
 
         return self.move_dir, self.mouse_dir, self.mouse_buttons

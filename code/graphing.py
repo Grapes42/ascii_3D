@@ -1,11 +1,19 @@
+"""
+File: graphing.py
+
+Usage: Handles all the logic behind drawing lines, and adding text and sprites to the character array.
+"""
+
 from copy import copy
 import numpy as np
 
+# Constants
 X = 1
 Y = 0
 
 class Graphing():
     def __init__(self, height, width, origin_y=0, origin_x=0, y_correction=.5) -> None:
+
         # Sets the width and height of the character array
         self.height = height
         self.width = width
@@ -21,11 +29,15 @@ class Graphing():
         # a y correction value is needed
         self.y_correction = y_correction
 
+
+
     # Resets the graph
-    def clear(self):
+    def clear(self) -> None:
         self.array = np.full((self.height, self.width), " ")
 
-    def plot(self, y, x, char="#", y_correction=True, add_origin=True):
+
+
+    def plot(self, y, x, char="#", y_correction=True, add_origin=True) -> None:
         if y_correction:
             y *= self.y_correction
         if add_origin:
@@ -35,7 +47,6 @@ class Graphing():
         # Round points to character array
         y = round(y)
         x = round(x)
-
 
         # Check if point is within the screen's Y boundary
         if (y < 0) or (y > self.height-1):
@@ -53,7 +64,9 @@ class Graphing():
         if in_y_boundary and in_x_boundary:
             self.array[y, x] = char
 
-    def get_first(self, axis0, axis1, coord0, coord1):
+
+    #  Returns which point should be the first one in a pair for best line drawing
+    def get_first(self, axis0, axis1, coord0, coord1) -> {int, int, int}:
 
         if coord0[axis0] <= coord1[axis0]:
             pos_0 = copy(coord0[axis0])
@@ -69,7 +82,9 @@ class Graphing():
 
         return pos_0, end_0, pos_1
 
-    def line(self, coord0, coord1, step_size=1, char="#", rounding=4, y_correction=True, add_origin=True):
+
+
+    def line(self, coord0, coord1, step_size=1, char="#", rounding=4, y_correction=True, add_origin=True) -> None:
         run = coord0[X] - coord1[X]
         rise = coord0[Y] - coord1[Y]
 
@@ -101,12 +116,16 @@ class Graphing():
                 self.plot(y=pos_y, x=pos_x, char=char, y_correction=y_correction, add_origin=add_origin)
                 pos_y += step_size
 
+
+
     # Plots lines between all specified points and pairs
-    def construct_pairs(self, points, pairs, step_size=1, char="#"):  
+    def construct_pairs(self, points, pairs, step_size=1, char="#") -> None:  
         for pair in pairs:
             self.line(points[pair[0], 0], points[pair[1], 0], char=char, step_size=step_size)
 
-    def rectangle(self, coord0, coord1, char="#", y_correction=True, add_origin=True):
+
+
+    def rectangle(self, coord0, coord1, char="#", y_correction=True, add_origin=True) -> None:
         a = copy(coord0)
         b = copy(coord0)
 
@@ -121,10 +140,14 @@ class Graphing():
         self.line(c, d, step_size=1, char=char, y_correction=y_correction, add_origin=add_origin)
         self.line(d, a, step_size=1, char=char, y_correction=y_correction, add_origin=add_origin)
 
-    def fill(self, char="#"):
+
+
+    def fill(self, char="#") -> None:
         self.array = np.full((self.height, self.width), char)
 
-    def write(self, message, y, x, y_correction=False, add_origin=False, gap_char=None):
+
+
+    def write(self, message, y, x, y_correction=False, add_origin=False, gap_char=None) -> None:
         for char in message:
             if char != gap_char:
                 self.plot(y=y, x=x, char=char, y_correction=y_correction, add_origin=add_origin)

@@ -88,7 +88,8 @@ Information about the current scene will be at the top left.
 
 The controls will be at the bottom left.
 
-Settings can by editing "settings.eth" and restarting the program.
+Settings can be changed by editing "settings.txt" and 
+restarting the program.
 
 
 

@@ -1,5 +1,6 @@
 import time
 import sys
+from os import name
 
 # Local imports
 from shapes import *
@@ -17,6 +18,16 @@ MIDDLE = 1
 RIGHT = 2
 
 pi = 3.14159265359
+
+#
+# Paths
+#
+if name == 'nt': # If windows
+    settings_path = "./settings.eth"
+    pistol_path = "./code/ascii_art/pistol.eth"
+else: # If linux
+    settings_path = "../setting.eth"
+    pistol_path = "ascii_art/pistol.eth"
 
 #
 # Main functions
@@ -50,7 +61,7 @@ def grab_art(file):
 
 settings = {}
 
-with open("../settings.eth") as f:
+with open(settings_path) as f:
     for line in f:
         line = line.replace(" ", "")
         line = line.replace("\n", "")
@@ -91,7 +102,7 @@ bullet_speed = settings["bullet_speed"]
 
 # Sprites
 
-pistol_lines = grab_art("ascii_art/pistol.eth")
+pistol_lines = grab_art(pistol_path)
 
 
 

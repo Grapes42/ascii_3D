@@ -22,7 +22,7 @@ class Object3D():
         for point in self.array[0]:
             point[axis] += amount
 
-    def rotate(self, origin, rads, axis, dir=1):
+    def rotate(self, origin, rads, axis):
         axes = [Y, X, Z]
 
         axes.remove(axis)

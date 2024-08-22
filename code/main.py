@@ -172,9 +172,18 @@ FOV: {fov}
 FPS: {fps}
 """
 
-
+controls_text = """Move: WASD
+Look: Mouse Movement
+Shoot: Left Click
+Spawn Cube: Right Click"""
 
 info_text_lines = info_text.split("\n")
+
+
+controls_text_lines = controls_text.split("\n")
+controls_text_y = screen_height - interface.border - len(controls_text_lines)
+
+
 pistol_y = screen_height - len(pistol_lines)
 pistol_x = screen_width/2 - 20
 
@@ -216,12 +225,19 @@ while True:
                        coord1=[screen_height-1, screen_width-1],
                        char=".", y_correction=False, add_origin=False)
 
-
+    # Info text
     text_y = 0
     for line in info_text_lines:
         graphing.write(y=text_y, x=2, message=line, add_origin=False)
         text_y += 1
 
+    # Controls text
+    text_y = controls_text_y
+    for line in controls_text_lines:
+        graphing.write(y=text_y, x=2, message=line, add_origin=False)
+        text_y += 1
+
+    # Pistol
     text_y = pistol_y
     for line in pistol_lines:
         graphing.write(y=text_y, x=pistol_x, message=line, add_origin=False, gap_char="|")

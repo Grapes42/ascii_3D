@@ -18,22 +18,9 @@ RIGHT = 2
 
 pi = 3.14159265359
 
-screen_height = 80
-screen_width = 150
-
-font = "Monospace"
-font_size = 12
-
-line_spacing = font_size
-
-fps = 60
-time_per_frame = 1/60
-
-fov = 90
-
-
-
-
+#
+# Main functions
+#
 def construct(objects):
     for object in objects:
         points, pairs = projection.map_to_2d(object.array, object.pairs)
@@ -47,19 +34,71 @@ def rotate(objects, axis, amount):
     for object in objects:
         object.rotate(origin=[0, 0, 0], rads=amount, axis=axis)
 
-fg_color = [182,242,216]
-bg_color=[19,30,25]
+def grab_art(file):
+    final_lines = []
+    with open(file) as f:
+        lines = f.readlines()
 
-for i in range(len(sys.argv)):
-    if sys.argv[i] == "-fg":
-        parts = sys.argv[i+1].split(",")
+        for line in lines:
+            final_lines.append(line.replace("\n", ""))
+    
+    return final_lines
 
-        fg_color = [int(parts[0]),int(parts[1]),int(parts[2])]
 
-    elif sys.argv[i] == "-bg":
-        parts = sys.argv[i+1].split(",")
 
-        bg_color = [int(parts[0]),int(parts[1]),int(parts[2])]
+# Settings from file
+
+settings = {}
+
+with open("../settings.eth") as f:
+    for line in f:
+        line = line.replace(" ", "")
+        line = line.replace("\n", "")
+        if line != "":
+            if line[0] != "#":
+                parts = line.split(":")
+                name = parts[0]
+                value = parts[1]
+
+                if "\"" in value:
+                    value = value.replace("\"", "")
+                elif "." in value:
+                    value = float(value)
+                else:
+                    value = int(value)
+
+                settings[name] = value
+
+screen_height = settings["screen_height"]
+screen_width = settings["screen_width"]
+
+font = settings["font"]
+font_size = settings["font_size"]
+line_spacing = font_size
+
+fps = settings["fps"]
+time_per_frame = 1/fps
+
+fov = settings["fov"]
+
+fg_color = settings["fg_color"]
+bg_color = settings["bg_color"]
+
+sens = settings["sensitivity"]
+move_speed = settings["movement_speed"]
+
+bullet_speed = settings["bullet_speed"]
+
+# Sprites
+
+pistol_lines = grab_art("ascii_art/pistol.eth")
+
+
+
+
+#
+# Defining objects
+#
 
 # Defining the object for graphing
 graphing = Graphing(height=screen_height, width=screen_width, 
@@ -133,37 +172,9 @@ FOV: {fov}
 FPS: {fps}
 """
 
-pistol = """|||||||||||||||||||:*:||||||||||||||||||||||||||||
-|||||||||||||||||.,,:,.|||||||||||||||||||||||||||
-|||||||||||||||.+=++**+,.|||||||||||||||||||||||||
-||||||||||||||.++,**=++:..||||||||||||||||||||||||
-||||||||||||||.::,+=#=+,,,||||||||||||||||||||||||
-||||||||||||||.:+*###==:::||||||||||||||||||||||||
-||||||||||||||.:*==##==+++,|||||||||||||||||||||||
-|||||||||||||.+==#====+==+:.||||||||||||||||||||||
-|||||||||||:++*###==+::+++++,|||||||||||||||||||||
-||||||||:*=##==#W##=+::,,:+===+.||||||||||||||||||
-||||||||.,:#=+=W##==*++,. :+::,+||||||||||||||||||
-||||||||,+::+:=#==:..   .  ,::..||||||||||||||||||
-|||||||||.++++#=*,        .::+||||||||||||||||||||
-|||||||||:++++W=*+::.    ,:+,:.:=*:|||||||||||||||
-|||||||||++*+:=====+:,,::++:.,.:====.|||||||||||||
-|||||,:::::,,+*+: . .    ....:==#####==+.|||||||||
-|||:======#==*:==+=:+,,....*==########===+||||||||
-||:===####W@@@##==**+*===##WW##########==*||||||||
-|.+=++=###W@WWW######==######==########==+:|||||||
-|,+:.:===##################==####========+==:|||||
-||.:::*===#######WWW#########==========*+:+=:|||||
-|||||:++===###==##=##########==#========+:,,||||||
-|||||...:+=====+=====#############==####=++,||||||
-|||||||||,:+*======########======####==#=+:|||||||
-|||||||||.|.:++:+========######WWW#####===+|||||||
-||||||||||.|.,:*=+*==#====#######========#==+.||||
-||||||||||..||:,+=##=###===###WW##==========+::+:|
-"""
+
 
 info_text_lines = info_text.split("\n")
-pistol_lines = pistol.split("\n")
 pistol_y = screen_height - len(pistol_lines)
 pistol_x = screen_width/2 - 20
 
@@ -190,7 +201,6 @@ move_dir = [0, 0]
 #
 while True:
     world = objects + bullets
-
     construct(world)
     
 

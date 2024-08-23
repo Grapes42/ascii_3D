@@ -16,12 +16,12 @@ Pyeth (pronounced pie-eth) is a text based 3D rendering engine made with Python.
 ### VS Code (If you have the Python extension installed)
 Simply open the ```pyeth-main/``` folder with: File $\rightarrow$ Open Folder $\rightarrow$ select ```pyeth-main/```
 
-Then click ```run_windows.py``` and press run at the top right.
+Then click ```run.py``` and press run at the top right.
 
 If this doesn't work, proceed below to your respective operating system.
 
 ### Windows
-Right-click ```run_windows.py``` $\rightarrow$ click run with python.
+Right-click ```run.py``` $\rightarrow$ click run with python.
 
 This will auto-install dependencies and run the program.
 
@@ -39,7 +39,7 @@ Then run by going into ```code/``` $\rightarrow$  right-click ```main.py``` $\ri
 
 ### Linux and Mac
 ```
-$ ./run_linux.sh
+$ ./run.py
 ```
 This will auto-install dependencies and run the program.
 

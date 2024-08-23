@@ -27,14 +27,8 @@ RIGHT = 2
 pi = 3.14159265359
 
 # Paths
-in_vs_code = 'TERM_PROGRAM' in os.environ.keys() and os.environ['TERM_PROGRAM'] == 'vscode'
-
-if name == 'nt' or in_vs_code: # If run in windows or VS Code
-    settings_path = "./settings.txt"
-    pistol_path = "./code/ascii_art/pistol.eth"
-else: # If linux
-    settings_path = "../settings.txt"
-    pistol_path = "ascii_art/pistol.eth"
+settings_path = "settings.txt"
+pistol_path = "code/ascii_art/pistol.eth"
 
 
 

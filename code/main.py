@@ -5,7 +5,7 @@ Usage: Relates all programs together to work as a cohesive entity.
 """
 
 import time
-import sys
+import os
 from os import name
 
 # Local imports
@@ -27,7 +27,9 @@ RIGHT = 2
 pi = 3.14159265359
 
 # Paths
-if name == 'nt': # If windows
+in_vs_code = 'TERM_PROGRAM' in os.environ.keys() and os.environ['TERM_PROGRAM'] == 'vscode'
+
+if name == 'nt' or in_vs_code: # If run in windows or VS Code
     settings_path = "./settings.txt"
     pistol_path = "./code/ascii_art/pistol.eth"
 else: # If linux

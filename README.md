@@ -12,12 +12,20 @@ To read the formatted version of this README, view it here https://github.com/Gr
 Pyeth (pronounced pie-eth) is a text based 3D rendering engine made with Python. It can be used to create 3D games and applications with that classic ASCII charm. Make the text green and you've got graphics straight out of an 80's sci fi movie.
 
 ## How to run
+
+### VS Code (If you have the Python extension installed)
+Simply open the ```pyeth-main/``` folder with: File $\rightarrow$ Open Folder $\rightarrow$ select ```pyeth-main/```
+
+Then click ```run_windows.py``` and press run at the top right.
+
+If this doesn't work, proceed below to your respective operating system.
+
 ### Windows
-Right-click ```run_windows.py``` $\rightarrow$ click run with python
+Right-click ```run_windows.py``` $\rightarrow$ click run with python.
 
 This will auto-install dependencies and run the program.
 
-If this doesn't work for whatever reason, dependencies can be installed via
+If this doesn't work for whatever reason, dependencies can be installed manually with:
 ```
 $ pip install -r code/requirements.txt
 ```
@@ -27,7 +35,9 @@ $ pip install numpy
 $ pip install opencv-python
 $ pip install pygame
 ```
-### Linux
+Then run by going into ```code/``` $\rightarrow$  right-click ```main.py``` $\rightarrow$ click run with python
+
+### Linux and Mac
 ```
 $ ./run_linux.sh
 ```

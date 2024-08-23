@@ -201,6 +201,12 @@ Press any key to continue"""
         # Checks input events
         for event in pygame.event.get():
 
+            for dir in self.mouse_dir:
+                if dir > 1:
+                    dir = 1
+                elif dir < -1:
+                    dir = -1
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     print("\n\nThanks for testing out Pyeth!")

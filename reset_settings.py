@@ -30,7 +30,7 @@ bg_color: "#131e19"
 
 # Gato Roboto - Virtual Cat by PureAsbestos:
 # fg_color: "#cc0e13"
-# bg_color: "##2b0000"
+# bg_color: "#2b0000"
 
 
 # Control Settings

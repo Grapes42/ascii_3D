@@ -10,13 +10,7 @@ and that the program is run correctly
 import os
 from os import name
 
-try:
-    import csv
-    import numpy as np
-    import pygame
-except:
-    print("Missing 1 or more dependencies, now installing...")
-    os.system("pip install -r code/requirements.txt")
+os.system("pip install -r code/requirements.txt")
 
 in_vs_code = 'TERM_PROGRAM' in os.environ.keys() and os.environ['TERM_PROGRAM'] == 'vscode'
 

@@ -128,6 +128,7 @@ projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width
 # Creating 3D objects
 objects = []
 bullets = []
+background = []
 
 # Test shapes
 
@@ -160,6 +161,12 @@ cube = Object3D(char="#")
 cube.array, cube.pairs = cube_by_center(x=-2, y=0, z=0,
                                         height=1, width=2, depth=2)
 objects.append(cube)
+
+# Sun
+sun = Object3D(char="#")
+sun.array, sun.pairs = cube_by_center(x=0, y=-1, z=10,
+                                        height=1, width=1, depth=1)
+background.append(sun)
 
 
 
@@ -220,6 +227,7 @@ while True:
     # Construct world by projecting all points and drawing paths between all pairs
     world = objects + bullets
     construct(world)
+    construct(background)
     
 
     # HUD
@@ -265,10 +273,16 @@ while True:
     if mouse_dir[X] != 0:
         if rads_from_horizon != 0:
             rotate(world, axis=X, amount=-rads_from_horizon)
+            rotate(background, axis=X, amount=-rads_from_horizon)
+
             rotate(world, axis=Y, amount=mouse_dir[X]*sens)
+            rotate(background, axis=Y, amount=mouse_dir[X]*sens)
+
             rotate(world, axis=X, amount=rads_from_horizon)
+            rotate(background, axis=X, amount=rads_from_horizon)
         else:
             rotate(world, axis=Y, amount=mouse_dir[X]*sens)
+            rotate(background, axis=Y, amount=mouse_dir[X]*sens)
 
     if mouse_dir[Y] != 0:
         at_up_limit = (rads_from_horizon <= -pi/2) and (mouse_dir[Y] < 0)
@@ -279,6 +293,7 @@ while True:
             vert_amount = mouse_dir[Y] * sens
 
             rotate(world, axis=X, amount=vert_amount)
+            rotate(background, axis=X, amount=vert_amount)
 
             rads_from_horizon += vert_amount
 

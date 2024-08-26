@@ -14,11 +14,13 @@ X = 1
 Z = 2
 
 class Projection():
-    def __init__(self, height, width, fx=800, fy=800, cx=0, cy=0) -> None:
+    def __init__(self, height, width, y_correction, fx=800, fy=800, cx=0, cy=0) -> None:
 
         # Sets the height and width of the character array
         self.height = height
         self.width = width
+
+        self.y_correction = y_correction
 
         # Camera matrix
         self.camera_matrix = np.array([  
@@ -42,8 +44,8 @@ class Projection():
         points_3d = copy(points_3d)
 
         # Define boundaries of the projection
-        y_bound = self.height
-        x_bound = self.width
+        y_bound = self.height*self.y_correction
+        x_bound = self.width/2
 
         pairs_for_projection = []
 

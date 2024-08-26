@@ -109,11 +109,12 @@ pistol_lines = grab_art(pistol_path)
 
 
 # Defining objects
+y_correction = .7
 
 # Defining the object for graphing
 graphing = Graphing(height=screen_height, width=screen_width, 
                 origin_y=round(screen_height/2), origin_x=round(screen_width/2),
-                y_correction=.7)
+                y_correction=y_correction)
 
 # Defining the object for the interface
 interface = Interface(chars_height=screen_height, chars_width=screen_width,
@@ -121,7 +122,7 @@ interface = Interface(chars_height=screen_height, chars_width=screen_width,
                 fg_color=fg_color, bg_color=bg_color)
 
 # Defining the object for projection
-projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width)
+projection = Projection(fy=fov, fx=fov, height=screen_height, width=screen_width, y_correction=y_correction)
 
 
 
@@ -165,7 +166,7 @@ objects.append(cube)
 # Sun
 sun = Object3D(char="#")
 sun.array, sun.pairs = cube_by_center(x=0, y=-1, z=10,
-                                        height=1, width=1, depth=1)
+                                        height=3, width=3, depth=1)
 background.append(sun)
 
 

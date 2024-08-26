@@ -6,7 +6,15 @@ Usage: Provides presets for regular shapes.
 
 import numpy as np
 
-def cube_by_center(y=0, x=0, z=0, width=1, height=1, depth=1) -> {list, list}:
+Y = 0
+X = 1
+Z = 2
+
+def cube_by_center(center, width=1, height=1, depth=1) -> {list, list}:
+        y = center[Y]
+        x = center[X]
+        z = center[Z]
+        
         points_3d = np.array([[     
                 [y-(height/2), x-(width/2), z-(depth/2)], # Top left front
                 [y+(height/2), x-(width/2), z-(depth/2)], # Bottom left front

@@ -134,41 +134,10 @@ background = []
 # Test shapes
 
 # Cube
-cube = Object3D(char=".")
-cube.array, cube.pairs = cube_by_center(x=0, y=0, z=5,
+cube = Object3D(center=[0,0,3], char=".")
+cube.array, cube.pairs = cube_by_center(center=cube.center,
                                         height=1, width=1, depth=1)
 objects.append(cube)
-
-# Cube
-cube = Object3D(char="~")
-cube.array, cube.pairs = cube_by_center(x=-1.2, y=.4, z=6,
-                                        height=.2, width=1, depth=1)
-objects.append(cube)
-
-# Pyramid
-pyramid = Object3D(char="*")
-pyramid.array, pyramid.pairs = pyramid_by_center(x=1, y=-.5, z=7,
-                                        height=2, width=1, depth=1)
-objects.append(pyramid)
-
-# Cube
-cube = Object3D(char="+")
-cube.array, cube.pairs = cube_by_center(x=2, y=0, z=-2,
-                                        height=1, width=1, depth=1)
-objects.append(cube)
-
-# Cube
-cube = Object3D(char="#")
-cube.array, cube.pairs = cube_by_center(x=-2, y=0, z=0,
-                                        height=1, width=2, depth=2)
-objects.append(cube)
-
-# Sun
-sun = Object3D(char="#")
-sun.array, sun.pairs = cube_by_center(x=0, y=-1, z=10,
-                                        height=3, width=3, depth=1)
-background.append(sun)
-
 
 
 # Info text
@@ -345,7 +314,9 @@ while True:
         if bullet.array[0, 0, Z] > 10:
             bullets.remove(bullet)
 
-
+    # Rotate with new system test
+    cube.rotate(origin=cube.center, axis=Z, rads=.2)
+    print(cube.center)
 
     # Wait as per the framerate
     time.sleep(time_per_frame)

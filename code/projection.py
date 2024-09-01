@@ -71,6 +71,11 @@ class Projection():
                                         self.rvec, self.tvec,
                                         self.camera_matrix,
                                         self.dist_coeffs)
+
+        z_map = []
+
+        for point in points_3d[0]:
+            z_map.append(point[Z])
         
         pairs_for_rendering = []
         
@@ -88,5 +93,5 @@ class Projection():
             if coord0_on_screen and coord1_on_screen:
                 pairs_for_rendering.append(pair)
 
-        return points_2d, pairs_for_rendering
+        return points_2d, pairs_for_rendering, z_map
             

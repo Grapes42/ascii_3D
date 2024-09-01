@@ -18,10 +18,11 @@ B = 1
 pi = 3.14159265359
 
 class Object3D():
-    def __init__(self, center=[0,0,0], array=[], pairs=[], char="#") -> None:
+    def __init__(self, center=[0,0,0], array=[], pairs=[], faces=[], char="#") -> None:
         self.center = center
         self.array = array # Array of the object's co-ordinates 
         self.pairs = pairs # Pairs to construct lines between
+        self.faces = faces
         self.char = char # Character used to construct shape
 
     def __str__(self) -> str:

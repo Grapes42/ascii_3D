@@ -35,7 +35,7 @@ pistol_path = "code/ascii_art/pistol.eth"
 # Main functions
 def construct(objects) -> None:
     for object in objects:
-        points, pairs = projection.map_to_2d(object.array, object.pairs)
+        points, pairs, z_map = projection.map_to_2d(object.array, object.pairs)
         graphing.construct_pairs(points=points, pairs=pairs, step_size=1, char=object.char)
         
 def move(objects, axis, amount) -> None:
@@ -135,9 +135,14 @@ background = []
 
 # Cube
 cube = Object3D(center=[0,0,3], char=".")
-cube.array, cube.pairs = cube_by_center(center=cube.center,
-                                        height=1, width=1, depth=1)
+cube.array, cube.pairs, cube.faces = cube_by_center(center=cube.center,
+                                                    height=1, width=1, depth=1)
 objects.append(cube)
+
+cube1 = Object3D(center=[0,0,6], char=".")
+cube1.array, cube1.pairs, cube1.faces = cube_by_center(center=cube1.center,
+                                                       height=1, width=1, depth=1)
+objects.append(cube1)
 
 
 # Info text
@@ -315,8 +320,8 @@ while True:
             bullets.remove(bullet)
 
     # Rotate with new system test
-    cube.rotate(origin=cube.center, axis=Z, rads=.2)
-    print(cube.center)
+    #cube.rotate(origin=cube.center, axis=Z, rads=.2)
+    #print(cube.center)
 
     # Wait as per the framerate
     time.sleep(time_per_frame)

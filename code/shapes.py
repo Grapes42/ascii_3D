@@ -16,15 +16,15 @@ def cube_by_center(center, width=1, height=1, depth=1) -> {list, list}:
         z = center[Z]
         
         points_3d = np.array([[     
-                [y-(height/2), x-(width/2), z-(depth/2)], # Top left front
-                [y+(height/2), x-(width/2), z-(depth/2)], # Bottom left front
-                [y-(height/2), x+(width/2), z-(depth/2)], # Top right front
-                [y+(height/2), x+(width/2), z-(depth/2)], # Bottom right front
+                [y-(height/2), x-(width/2), z-(depth/2)], # 0, Top left front
+                [y+(height/2), x-(width/2), z-(depth/2)], # 1, Bottom left front
+                [y-(height/2), x+(width/2), z-(depth/2)], # 2, Top right front
+                [y+(height/2), x+(width/2), z-(depth/2)], # 3, Bottom right front
                 
-                [y-(height/2), x-(width/2), z+(depth/2)], # Top left back
-                [y+(height/2), x-(width/2), z+(depth/2)], # Bottom left back
-                [y-(height/2), x+(width/2), z+(depth/2)], # Top right back
-                [y+(height/2), x+(width/2), z+(depth/2)]  # Bottom right back    
+                [y-(height/2), x-(width/2), z+(depth/2)], # 4, Top left back
+                [y+(height/2), x-(width/2), z+(depth/2)], # 5, Bottom left back
+                [y-(height/2), x+(width/2), z+(depth/2)], # 6, Top right back
+                [y+(height/2), x+(width/2), z+(depth/2)]  # 7, Bottom right back    
         ]], np.float32)
         
         pairs = [ 
@@ -32,8 +32,17 @@ def cube_by_center(center, width=1, height=1, depth=1) -> {list, list}:
                 [4, 5], [5, 7], [7, 6], [6, 4],
                 [0, 4], [1, 5], [3, 7], [2, 6] 
         ]
+
+        faces = [
+                [0, 1, 3, 2], # Front face
+                [4, 5, 7, 6], # Back face
+                [0, 1, 5, 4], # Left face
+                [2, 3, 7, 6], # Right face
+                [0, 2, 6, 4], # Top face
+                [1, 3, 7, 5], # Bottom face
+        ]
         
-        return points_3d, pairs
+        return points_3d, pairs, faces
 
 """ i'll do this later lol
 def dodecahedron_by_center(y=0, x=0, z=0):
